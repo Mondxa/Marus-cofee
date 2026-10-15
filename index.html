@@ -705,7 +705,7 @@ html:not(.js) .loader{display:none}
     <div class="shop-steps reveal">
       <div class="step"><span>1</span><p><strong>Agrega</strong> lo que quieras al carrito</p></div>
       <div class="step"><span>2</span><p><strong>Elige</strong> retiro en local o despacho</p></div>
-      <div class="step"><span>3</span><p><strong>Confirma</strong> por WhatsApp y paga</p></div>
+      <div class="step"><span>3</span><p><strong>Confirma</strong> tu pedido y paga</p></div>
       <button class="btn btn-primary" data-open-cart>Ver mi carrito <span aria-hidden="true">→</span></button>
     </div>
   </div>
@@ -740,7 +740,6 @@ html:not(.js) .loader{display:none}
   <div class="wrap">
     <div class="reveal">
       <h2>Pasa por tu <em>medialuna</em> de hoy</h2>
-      <!-- TODO: confirmar dirección del café (esta es la de Panadería Argentina) -->
       <p class="address">📍 Av. Las Condes 8586, Las Condes, Santiago</p>
       <div class="ctas">
         <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Av.+Las+Condes+8586+Santiago" target="_blank" rel="noopener">Abrir en Maps</a>
@@ -850,7 +849,7 @@ function ph(p){
    Completa los TODO antes de publicar.
    ========================================================= */
 const CONFIG = {
-  whatsapp: '',               // TODO: número del local con código país, sin "+" ni espacios. Ej: '56912345678'
+  whatsapp: '',               // Desactivado (prototipo). Para activarlo: número con código país, sin "+" ni espacios. Ej: '56912345678'
   local: 'Av. Las Condes 8586, Las Condes',
   despacho: {
     costo: 3000,              // TODO: confirmar costo de despacho (CLP)
@@ -858,7 +857,7 @@ const CONFIG = {
     comunas: ['Las Condes','Vitacura','Lo Barnechea','Providencia','La Reina','Ñuñoa'] // TODO: confirmar
   },
   franjas: ['Lo antes posible','9:00 – 11:00','11:00 – 13:00','13:00 – 14:00','14:00 – 17:00','17:00 – 20:00'],
-  transferencia: {            // TODO: si lo dejas vacío, se dice que los datos llegan por WhatsApp
+  transferencia: {            // Si lo dejas vacío, se avisa que los datos se entregan al confirmar
     banco:'', tipo:'', numero:'', rut:'', nombre:'', email:''
   }
 };
@@ -1028,8 +1027,8 @@ function renderFoot(){
       <button class="link-btn" data-go="cart">← Volver al carrito</button>`;
   } else {
     const o=lastOrder, wa=CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(o.text)}`:'';
-    dFoot.innerHTML=`${wa?`<a class="btn btn-wa" href="${wa}" target="_blank" rel="noopener">Enviar pedido por WhatsApp</a>`:`<p class="warn">Falta configurar el WhatsApp del local. Copia el resumen y envíalo.</p>`}
-      <button class="btn btn-ghost" data-copy>Copiar resumen</button>
+    dFoot.innerHTML=`${wa?`<a class="btn btn-wa" href="${wa}" target="_blank" rel="noopener">Enviar pedido por WhatsApp</a>`:''}
+      <button class="btn ${wa?'btn-ghost':'btn-primary'}" data-copy>Copiar resumen</button>
       <button class="link-btn" data-close-cart>Seguir mirando</button>`;
   }
 }
@@ -1072,7 +1071,7 @@ function renderDrawer(){
       </fieldset>
       <fieldset class="fs"><legend>Tus datos</legend>
         <div class="field" style="margin-top:0"><label for="fNombre">Nombre</label><input id="fNombre" name="nombre" autocomplete="name" value="${esc(draft.nombre||'')}"><span class="err">¿A nombre de quién va el pedido?</span></div>
-        <div class="field"><label for="fTel">Teléfono / WhatsApp</label><input id="fTel" name="telefono" type="tel" autocomplete="tel" placeholder="+56 9 1234 5678" value="${esc(draft.telefono||'')}"><span class="err">Escribe un teléfono válido.</span></div>
+        <div class="field"><label for="fTel">${CONFIG.whatsapp?'Teléfono / WhatsApp':'Teléfono'}</label><input id="fTel" name="telefono" type="tel" autocomplete="tel" placeholder="+56 9 1234 5678" value="${esc(draft.telefono||'')}"><span class="err">Escribe un teléfono válido.</span></div>
         <div class="field"><label for="fMail">Email <small>(opcional)</small></label><input id="fMail" name="email" type="email" autocomplete="email" value="${esc(draft.email||'')}"></div>
       </fieldset>
       <fieldset class="fs"><legend>¿Cómo pagas?</legend>
@@ -1096,8 +1095,8 @@ function renderDrawer(){
     dBody.innerHTML=`<div class="done">
       <div class="check"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
       <h3>¡Pedido ${o.id} listo!</h3>
-      <p>Último paso: envíanoslo por WhatsApp y te confirmamos al tiro.</p>
-      ${o.pago==='Transferencia bancaria'?`<div class="bank">${hasBank?`<strong>Datos para transferir ${clp(o.total)}</strong><br>${esc(T.nombre)} · RUT ${esc(T.rut)}<br>${esc(T.banco)} · ${esc(T.tipo)} ${esc(T.numero)}<br>${esc(T.email)}`:`<strong>Transferencia:</strong> te enviamos los datos por WhatsApp al confirmar.`}</div>`:''}
+      <p>${CONFIG.whatsapp?'Último paso: envíanoslo por WhatsApp y te confirmamos al tiro.':'Este es un prototipo: el pedido todavía no se envía al local. Puedes copiar el resumen.'}</p>
+      ${o.pago==='Transferencia bancaria'?`<div class="bank">${hasBank?`<strong>Datos para transferir ${clp(o.total)}</strong><br>${esc(T.nombre)} · RUT ${esc(T.rut)}<br>${esc(T.banco)} · ${esc(T.tipo)} ${esc(T.numero)}<br>${esc(T.email)}`:`<strong>Transferencia:</strong> ${CONFIG.whatsapp?'te enviamos los datos por WhatsApp al confirmar.':'los datos se entregan al confirmar el pedido.'}`}</div>`:''}
       <div class="receipt">${esc(o.text)}</div></div>`;
   }
   renderFoot();
