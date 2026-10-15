@@ -41,34 +41,35 @@
     const b = $('.loader-logo b', loader);
     b.style.animation = 'none';
     const count = $('.loader-count', loader);
-    let quick = false;
-    try { quick = sessionStorage.getItem('marus-visto') === '1'; sessionStorage.setItem('marus-visto', '1'); } catch (e) {}
-    document.documentElement.style.overflow = 'hidden';
-    const n = { v: 0 };
-    const tl = gsap.timeline({
-      defaults: { ease: 'expo.inOut' },
-      onComplete: () => { loader.remove(); ScrollTrigger.refresh(); }
-    });
-    tl.fromTo(b, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1 })
-      .from('.loader-logo small', { y: 16, opacity: 0, duration: .5, ease: 'power3.out' }, .55)
-      .from('.loader-tag', { opacity: 0, letterSpacing: '1em', duration: .8, ease: 'power3.out' }, .3)
-      .to(n, { v: 100, duration: 1.2, ease: 'power2.inOut', onUpdate: () => count.textContent = Math.round(n.v) }, 0)
-      .to('.loader-panel', { yPercent: -100, duration: .6 }, 1.15)
-      .add(() => { document.documentElement.style.overflow = ''; heroIn(); }, 1.6)
-      .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: .8 }, 1.6);
-    if (quick) tl.timeScale(2.2);
-    /* Seguro: si la pestaña está en segundo plano o lenta, nunca dejar el preloader pegado */
-    setTimeout(() => { if (loader.isConnected) tl.progress(1); }, 6000);
+    let seen = false;
+    try { seen = sessionStorage.getItem('marus-visto') === '1'; sessionStorage.setItem('marus-visto', '1'); } catch (e) {}
+    if (seen) {
+      /* Ya lo vio en esta sesión: sin preloader */
+      loader.remove();
+      heroIn();
+    } else {
+      /* Primera visita: ~1,3 s en total */
+      document.documentElement.style.overflow = 'hidden';
+      const n = { v: 0 };
+      const tl = gsap.timeline({
+        defaults: { ease: 'expo.inOut' },
+        onComplete: () => { loader.remove(); ScrollTrigger.refresh(); }
+      });
+      tl.fromTo(b, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .55 })
+        .from('.loader-logo small', { y: 12, opacity: 0, duration: .3, ease: 'power3.out' }, .3)
+        .from('.loader-tag', { opacity: 0, duration: .3, ease: 'power2.out' }, .15)
+        .to(n, { v: 100, duration: .65, ease: 'power2.inOut', onUpdate: () => count.textContent = Math.round(n.v) }, 0)
+        .to('.loader-panel', { yPercent: -100, duration: .4 }, .6)
+        .add(() => { document.documentElement.style.overflow = ''; heroIn(); }, .85)
+        .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: .5 }, .85);
+      /* Seguro: si la pestaña está en segundo plano o lenta, nunca dejar el preloader pegado */
+      setTimeout(() => { if (loader.isConnected) tl.progress(1); }, 4000);
+    }
   }
 
-  /* ---------- 2. Hero: entrada, contadores, parallax y salida ---------- */
+  /* ---------- 2. Hero: entrada, parallax y salida ---------- */
   function heroIn() {
     window.startHero && window.startHero();
-    $$('.hero-meta strong').forEach(el => {
-      const m = el.textContent.match(/^(\d+)(.*)$/); if (!m) return;
-      const o = { v: 0 };
-      gsap.to(o, { v: +m[1], duration: 1.8, delay: .6, ease: 'power3.out', onUpdate: () => el.textContent = Math.round(o.v) + m[2] });
-    });
   }
   const heroArt = $('.hero-art');
   if (heroArt && fine) {
@@ -86,7 +87,13 @@
     let x = 0, dir = 1, boost = 0, half = track.scrollWidth / 2;
     addEventListener('resize', () => half = track.scrollWidth / 2);
     const skew = gsap.quickTo(track, 'skewX', { duration: .5, ease: 'power3' });
+    const strip = track.closest('.marquee');
+    let hover = false;
+    strip.addEventListener('pointerenter', () => hover = true);
+    strip.addEventListener('pointerleave', () => hover = false);
     gsap.ticker.add((t, dt) => {
+      /* Quieta si está en pausa, con el mouse encima o fuera de pantalla */
+      if (hover || strip.classList.contains('paused') || strip.classList.contains('offscreen')) return;
       x -= (0.07 + boost) * Math.min(dt, 50) * dir;
       x = gsap.utils.wrap(-half, 0, x);
       boost *= 0.92;
@@ -109,7 +116,7 @@
     $$('.sec-head h2, .shop-head h2, .about h2, .visit h2, .feature h2, .gal-intro h2').forEach(h => {
       const split = SplitText.create(h, { type: 'words,chars', mask: 'words' });
       gsap.from(split.chars, {
-        yPercent: 110, rotate: 10, opacity: 0, duration: .9, ease: 'back.out(1.7)',
+        yPercent: 110, rotate: 6, opacity: 0, duration: .9, ease: 'power4.out',
         stagger: { each: .025 },
         scrollTrigger: { trigger: h, start: 'top 88%' }
       });
@@ -165,13 +172,12 @@
   });
   gsap.to('.sign', { rotate: 28, ease: 'none', scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true } });
   gsap.from('.perk', {
-    y: 60, scale: .8, opacity: 0, duration: .8, ease: 'back.out(2)', stagger: .12, clearProps: 'all',
-    onStart() { this.targets().forEach(t => t.style.transition = 'none'); },
+    y: 30, opacity: 0, duration: .7, ease: 'power3.out', stagger: .1, clearProps: 'transform,opacity',
     scrollTrigger: { trigger: '.perks', start: 'top 92%' }
   });
   gsap.from('.visit', { scale: .9, borderRadius: 90, ease: 'none', scrollTrigger: { trigger: '.visit', start: 'top bottom', end: 'top 35%', scrub: true } });
   gsap.from('#hours li', { x: 50, opacity: 0, stagger: .1, duration: .7, ease: 'power3.out', scrollTrigger: { trigger: '#hours', start: 'top 88%' } });
-  gsap.from('.shop-steps .step span', { scale: 0, rotate: -180, stagger: .15, duration: .8, ease: 'back.out(2.5)', scrollTrigger: { trigger: '.shop-steps', start: 'top 92%' } });
+  gsap.from('.shop-steps .step span', { scale: .4, opacity: 0, stagger: .12, duration: .6, ease: 'power3.out', scrollTrigger: { trigger: '.shop-steps', start: 'top 92%' } });
 
   /* Barra de progreso */
   gsap.to('.progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: .3 } });
@@ -233,7 +239,7 @@
 
     const MAG = '.btn,.buy,.chip,.cart-btn';
     let cur = null;
-    const release = el => gsap.to(el, { x: 0, y: 0, duration: .7, ease: 'elastic.out(1, .4)' });
+    const release = el => gsap.to(el, { x: 0, y: 0, duration: .5, ease: 'power3.out' });
     document.addEventListener('pointermove', e => {
       const el = e.target.closest(MAG);
       if (el !== cur) { cur && release(cur); cur = el; }
