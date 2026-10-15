@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maru's Coffee · Café y bollería argentina en Santiago</title>
+<meta name="color-scheme" content="light">
+<script>
+/* Las animaciones de entrada solo ocultan contenido si el JavaScript corre.
+   Si el script principal no llega a terminar, se muestra todo igual. */
+document.documentElement.classList.add('js');
+setTimeout(function(){ if(!window.__appReady) document.documentElement.classList.remove('js'); }, 4000);
+</script>
 <meta name="description" content="Maru's Coffee: cafetería y bollería artesanal argentina en Santiago de Chile. Medialunas 100% mantequilla, croissants, tostadas y café de especialidad. Pet friendly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +25,7 @@
   --brown-soft:#f3e7dd;
   --wood:#6b3f24;        /* madera de la vitrina */
   --butter:#e9b25f;      /* hojaldre dorado */
+  --butter-light:#f3c97f; /* dorado sobre superficies verdes claras (contraste AA) */
   --cream:#fbf8f3;
   --ink:#1c2526;
   --muted:#5f6b6c;
@@ -250,7 +258,7 @@ section{padding:120px 0}
 .hours ul{list-style:none}
 .hours li{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px dashed rgba(255,255,255,.2)}
 .hours li:last-child{border:0}
-.hours li.today{color:var(--butter);font-weight:700}
+.hours li.today{color:var(--butter-light);font-weight:700}
 .address{margin:22px 0 30px;font-size:1.1rem;opacity:.9}
 .visit .ctas{display:flex;gap:12px;flex-wrap:wrap}
 .visit .btn-ghost{border-color:var(--cream);color:var(--cream)}
@@ -397,6 +405,10 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 .loader-panel{position:absolute;inset:0;background:var(--teal);transform:translateY(100%)}
 
 .wait .card,.wait .shop-item{animation-play-state:paused!important}
+
+/* Sin JavaScript (o si falló): todo visible, sin estados iniciales ocultos */
+html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate,.hero-croissant,.cup,.sticker){opacity:1!important;transform:none!important;animation:none!important}
+html:not(.js) .loader{display:none}
 @media (min-width:901px){.motion .feature{min-height:100vh;display:flex;align-items:center}}
 
 /* Barra de progreso de lectura */
@@ -492,7 +504,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   .mobile-cta{display:flex;position:fixed;left:16px;right:16px;bottom:16px;z-index:40;gap:10px;transform:translateY(120%);transition:transform .5s var(--ease)}
   .mobile-cta.show{transform:none}
   .mobile-cta .btn{flex:1;justify-content:center;min-height:54px;box-shadow:0 16px 30px -12px rgba(0,0,0,.4)}
-  .mobile-cta .btn-ghost{background:var(--white)}
+  .mobile-cta .btn-ghost,.mobile-cta .btn-ghost:hover{background:var(--white);color:var(--teal)}
 }
 @media (max-width:520px){
   .tabs{width:100%}
@@ -607,12 +619,12 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 
     <div class="tabs reveal" role="tablist" aria-label="Categorías">
       <span class="tab-pill" id="pill" aria-hidden="true"></span>
-      <button class="tab" role="tab" aria-selected="true" data-cat="dulce">Bollería</button>
-      <button class="tab" role="tab" aria-selected="false" data-cat="salado">Salado</button>
-      <button class="tab" role="tab" aria-selected="false" data-cat="bebidas">Bebidas</button>
+      <button class="tab" role="tab" id="tab-dulce" aria-controls="grid" aria-selected="true" tabindex="0" data-cat="dulce">Bollería</button>
+      <button class="tab" role="tab" id="tab-salado" aria-controls="grid" aria-selected="false" tabindex="-1" data-cat="salado">Salado</button>
+      <button class="tab" role="tab" id="tab-bebidas" aria-controls="grid" aria-selected="false" tabindex="-1" data-cat="bebidas">Bebidas</button>
     </div>
 
-    <div class="grid" id="grid" role="tabpanel" aria-live="polite"></div>
+    <div class="grid" id="grid" role="tabpanel" aria-labelledby="tab-dulce"></div>
   </div>
 </section>
 
@@ -1214,7 +1226,7 @@ function media(p){
 function render(cat){
   const list = PRODUCTS.filter(p=>p.cat===cat);
   grid.innerHTML = list.map((p,i)=>`
-    <article class="card" tabindex="0" style="--i:${i};--bg:${p.bg}" data-idx="${PRODUCTS.indexOf(p)}" aria-label="${p.name}, ver detalle">
+    <article class="card" role="button" aria-haspopup="dialog" tabindex="0" style="--i:${i};--bg:${p.bg}" data-idx="${PRODUCTS.indexOf(p)}" aria-label="${p.name}, ver detalle">
       <div class="card-inner">
         <div class="card-media">${p.badge?`<span class="badge">${p.badge}</span>`:''}${media(p)}<span class="shine"></span><span class="more" aria-hidden="true">+</span></div>
         <div class="card-body"><div><h3>${p.name}</h3><p>${p.desc}</p></div>${p.price?`<span class="price">${p.price}</span>`:''}</div>
@@ -1230,13 +1242,22 @@ function movePill(t){pill.style.width=t.offsetWidth+'px';pill.style.transform=`t
 let gridShown=false;
 tabs.forEach(t=>t.addEventListener('click',()=>{
   if(t.getAttribute('aria-selected')==='true') return;
-  tabs.forEach(x=>x.setAttribute('aria-selected',x===t));
+  tabs.forEach(x=>{x.setAttribute('aria-selected',x===t);x.tabIndex=x===t?0:-1});
+  grid.setAttribute('aria-labelledby',t.id);
   movePill(t);
   const cards=grid.querySelectorAll('.card');
   cards.forEach(c=>{c.classList.remove('show');c.classList.add('out')});
   setTimeout(()=>render(t.dataset.cat),cards.length?320:0);
 }));
 addEventListener('resize',()=>movePill(tabs.find(t=>t.getAttribute('aria-selected')==='true')));
+/* Teclado en las pestañas: flechas, Inicio y Fin (patrón ARIA de tabs) */
+document.querySelector('.tabs').addEventListener('keydown',e=>{
+  const i=tabs.indexOf(document.activeElement); if(i<0) return;
+  const j={ArrowRight:i+1,ArrowLeft:i-1,Home:0,End:tabs.length-1}[e.key];
+  if(j===undefined) return;
+  e.preventDefault();
+  const t=tabs[(j+tabs.length)%tabs.length]; t.focus(); t.click();
+});
 
 /* Tilt 3D + brillo que sigue al cursor */
 const fine = matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -1284,6 +1305,14 @@ function closeModal(keepFocus){
 }
 modal.addEventListener('click',e=>{if(e.target.closest('[data-close]'))closeModal()});
 addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal()});
+/* Tab no se escapa de la ficha abierta (igual que en el carrito) */
+modal.addEventListener('keydown',e=>{
+  if(e.key!=='Tab'||!modal.classList.contains('open')) return;
+  const f=[...modal.querySelectorAll('button,a[href],input,select,textarea')].filter(el=>!el.disabled&&el.offsetParent!==null);
+  if(!f.length) return;
+  if(e.shiftKey&&document.activeElement===f[0]){e.preventDefault();f.at(-1).focus()}
+  else if(!e.shiftKey&&document.activeElement===f.at(-1)){e.preventDefault();f[0].focus()}
+});
 
 /* ===== Split text del hero ===== */
 document.querySelectorAll('[data-split]').forEach(el=>{
@@ -1362,6 +1391,7 @@ addEventListener('load',()=>{
   if(!window.__preloader){document.getElementById('loader')?.remove();startHero()}
 });
 setTimeout(()=>{startHero();if(!window.__preloader)document.getElementById('loader')?.remove()},4500);
+window.__appReady=true;
 </script>
 <!-- Capa de animación: GSAP + plugins (gratuitos desde GSAP 3.13). Si no cargan, la página funciona igual. -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
