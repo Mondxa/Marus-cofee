@@ -81,36 +81,7 @@
   gsap.to('.hero-art', { yPercent: 16, scale: .86, rotate: -6, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
   gsap.to('.hero .wrap > div:first-child', { yPercent: -14, opacity: .15, ease: 'none', scrollTrigger: { trigger: '.hero', start: '30% top', end: 'bottom top', scrub: true } });
 
-  /* ---------- 3. Marquee que reacciona a la velocidad del scroll ---------- */
-  const track = $('.marquee-track');
-  if (track) {
-    let x = 0, dir = 1, boost = 0, half = track.scrollWidth / 2;
-    addEventListener('resize', () => half = track.scrollWidth / 2);
-    const skew = gsap.quickTo(track, 'skewX', { duration: .5, ease: 'power3' });
-    const strip = track.closest('.marquee');
-    let hover = false;
-    strip.addEventListener('pointerenter', () => hover = true);
-    strip.addEventListener('pointerleave', () => hover = false);
-    gsap.ticker.add((t, dt) => {
-      /* Quieta si está en pausa, con el mouse encima o fuera de pantalla */
-      if (hover || strip.classList.contains('paused') || strip.classList.contains('offscreen')) return;
-      x -= (0.07 + boost) * Math.min(dt, 50) * dir;
-      x = gsap.utils.wrap(-half, 0, x);
-      boost *= 0.92;
-      gsap.set(track, { x });
-    });
-    ScrollTrigger.create({
-      onUpdate: self => {
-        dir = self.direction;
-        const v = self.getVelocity();
-        boost = Math.min(Math.abs(v) / 2500, 1.4);
-        skew(gsap.utils.clamp(-12, 12, v / -250));
-      }
-    });
-    ScrollTrigger.addEventListener('scrollEnd', () => skew(0));
-  }
-
-  /* ---------- 4. Títulos: letras que suben con rebote ---------- */
+  /* ---------- 3. Títulos: letras que suben al entrar ---------- */
   const splitTitles = () => {
     if (!window.SplitText) return;
     $$('.sec-head h2, .shop-head h2, .about h2, .visit h2, .feature h2, .gal-intro h2').forEach(h => {
@@ -146,7 +117,6 @@
         x: () => -dist(), ease: 'none',
         scrollTrigger: { trigger: '.gallery', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 }
       });
-      gsap.to('.gal-bg', { x: () => -dist() * .4, ease: 'none', scrollTrigger: { trigger: '.gallery', start: 'top top', end: () => '+=' + dist(), scrub: 1, invalidateOnRefresh: true } });
       $$('.gal-item').forEach((item, i) => {
         gsap.fromTo($('img', item), { xPercent: -15 }, { xPercent: 0, ease: 'none', scrollTrigger: { trigger: item, containerAnimation: move, start: 'left right', end: 'right left', scrub: true } });
         gsap.from(item, { y: i % 2 ? -90 : 90, rotate: i % 2 ? -7 : 7, opacity: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: item, containerAnimation: move, start: 'left 92%' } });
@@ -233,7 +203,7 @@
       const act = t.closest('a,button,label,.chip,[role="tab"]');
       ring.classList.toggle('label', !!card);
       ring.classList.toggle('link', !card && !!act);
-      ring.classList.toggle('dark', !!t.closest('.feature,.visit,.marquee,.drawer-bg,.modal-bg'));
+      ring.classList.toggle('dark', !!t.closest('.feature,.visit,.drawer-bg,.modal-bg'));
       label.textContent = card ? 'Ver' : '';
     });
 

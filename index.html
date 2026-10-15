@@ -128,12 +128,6 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .feature-stage .disc-photo{inset:16px;width:calc(100% - 32px);height:calc(100% - 32px)}
 
 /* ===== Marquee ===== */
-.marquee{background:var(--teal);color:var(--cream);padding:22px 0;overflow:hidden;transform:rotate(-1.5deg);margin:-10px -10px 0;position:relative;z-index:2}
-.marquee-track{display:flex;gap:48px;width:max-content;animation:marq 32s linear infinite;font-family:var(--brush);font-size:2rem;white-space:nowrap}
-.marquee:hover .marquee-track,.marquee.paused .marquee-track{animation-play-state:paused}
-.marquee-toggle{position:absolute;right:clamp(12px,3vw,32px);top:50%;z-index:2;width:44px;height:44px;margin-top:-22px;border-radius:50%;background:var(--white);color:var(--teal);display:grid;place-items:center;box-shadow:var(--shadow-btn)}
-.marquee-toggle span{width:12px;height:14px;border-left:4px solid currentColor;border-right:4px solid currentColor}
-.marquee.paused .marquee-toggle span{width:0;height:0;border:0;border-left:13px solid currentColor;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px}
 /* Ficha tipográfica para productos sin foto */
 .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:12px;text-align:center;background:var(--bg,var(--brown-soft));color:var(--teal-deep)}
 .ph-mark{font-family:var(--brush);font-size:1.1rem;color:var(--teal)}
@@ -146,7 +140,6 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .empty-mark small{font-size:.8rem}
 /* Animaciones infinitas en pausa cuando su sección no está en pantalla */
 .offscreen,.offscreen *{animation-play-state:paused!important}
-.marquee-track span::after{content:"✦";margin-left:48px;color:var(--butter);font-size:1.2rem;vertical-align:middle}
 @keyframes marq{to{transform:translateX(-50%)}}
 
 /* ===== Sections ===== */
@@ -262,8 +255,7 @@ section{padding:120px 0}
 .about h2 em{font-family:var(--brush);font-style:normal;color:var(--brown);font-weight:400}
 .about p{color:var(--muted);margin-bottom:16px}
 .perks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
-.perk{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center;padding:14px 0;border-top:1px solid rgba(29,79,85,.14)}
-.perk i{font-style:normal;font-size:1.5rem;grid-row:span 2}
+.perk{padding:14px 0;border-top:1px solid rgba(29,79,85,.14)}
 .perk strong{display:block;color:var(--teal);font-size:.98rem;line-height:1.2}
 .perk span{font-size:.8rem;color:var(--muted)}
 
@@ -423,7 +415,6 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 .loader-logo b{font-size:clamp(6rem,18vw,11rem);clip-path:inset(0 100% 0 0);animation:loaderLogo 1s .2s var(--ease) forwards}
 .loader-logo small{font-size:clamp(.9rem,2vw,1.3rem)}
 @keyframes loaderLogo{to{clip-path:inset(0 0 0 0)}}
-.loader-tag{font-size:.78rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--brown)}
 .loader-count{position:absolute;right:clamp(16px,4vw,48px);bottom:clamp(12px,3vw,32px);font-family:var(--serif);font-size:clamp(3rem,9vw,7rem);line-height:1;color:var(--teal);font-variant-numeric:tabular-nums}
 .loader-count::after{content:"%";font-size:.4em;vertical-align:top;margin-left:4px;color:var(--brown)}
 .loader-panel{position:absolute;inset:0;background:var(--teal);transform:translateY(100%)}
@@ -463,12 +454,10 @@ html:not(.js) .loader{display:none}
 .hero-art .ring{translate:calc(var(--px) * 10px) calc(var(--py) * 10px)}
 .hero-art .sticker{translate:calc(var(--px) * 34px) calc(var(--py) * 28px)}
 .hero-art .sticker.s2{translate:calc(var(--px) * -30px) calc(var(--py) * -24px)}
-.motion .marquee-track{animation:none}
 
 /* Galería horizontal "Del horno" */
 .gallery{padding:0;background:var(--cream);position:relative}
 .gal-pin{position:relative;height:100vh;height:100svh;display:flex;align-items:center;overflow:hidden;scroll-padding-inline:16px}
-.gal-bg{position:absolute;left:0;top:50%;transform:translateY(-50%);white-space:nowrap;font-family:var(--brush);font-size:clamp(7rem,22vw,20rem);line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(29,79,85,.16);pointer-events:none;user-select:none}
 .gal-track{position:relative;display:flex;align-items:center;gap:clamp(28px,5vw,80px);padding:0 8vw;width:max-content}
 .gal-intro{width:min(420px,80vw);flex:none}
 .gal-intro h2{font-family:var(--serif);font-size:clamp(2.6rem,5.5vw,4.6rem);line-height:1;color:var(--teal-deep);margin:12px 0 16px}
@@ -486,7 +475,6 @@ html:not(.js) .loader{display:none}
 /* Grilla de puntos estilo anime.js (footer) */
 .dots{--cols:26;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:clamp(8px,1.4vw,16px);max-width:760px;margin:0 auto 10px;padding:10px 0}
 .dots i{display:block;aspect-ratio:1;border-radius:50%;background:var(--teal);opacity:.75;will-change:transform}
-.dots-hint{font-family:var(--brush);font-size:1.3rem;color:var(--brown);margin:0 0 40px}
 
 @media (max-width:900px){
   .gal-pin{height:auto;display:block;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:84px 0 60px;scrollbar-width:none}
@@ -496,7 +484,6 @@ html:not(.js) .loader{display:none}
   .gal-item{--h:min(56vh,420px)!important;margin-top:0!important;scroll-snap-align:center}
   .gal-frame img{width:100%}
   .gal-end{scroll-snap-align:end;padding-right:16px}
-  .gal-bg{font-size:9rem}
   .dots{--cols:14}
 }
 @media (prefers-reduced-motion:reduce){.loader,.cursor{display:none!important}}
@@ -533,7 +520,6 @@ html:not(.js) .loader{display:none}
   .tabs{width:100%}
   .tab{flex:1;padding:0 10px;font-size:.9rem}
   .perks{grid-template-columns:1fr}
-  .marquee-track{font-size:1.5rem}
   .sticker{font-size:.75rem;padding:8px 12px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -548,7 +534,6 @@ html:not(.js) .loader{display:none}
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader-inner">
     <span class="logo loader-logo"><b>M's</b><small>COFFEE</small></span>
-    <span class="loader-tag">Horneando…</span>
   </div>
   <span class="loader-count">0</span>
   <div class="loader-panel"></div>
@@ -584,15 +569,15 @@ html:not(.js) .loader{display:none}
   <div class="wrap">
     <div>
       <h1 class="split" data-split>Medialunas que <em>te abrazan</em> el día</h1>
-      <p class="lead reveal"><span class="flag" aria-hidden="true"></span> Bollería argentina en Santiago. Hojaldre 100% mantequilla, café de especialidad y ese sabor de casa porteña, horneado cada mañana por Maru.</p>
+      <p class="lead reveal"><span class="flag" aria-hidden="true"></span> Bollería argentina en Santiago. Medialunas de hojaldre 100% mantequilla y café de especialidad.</p>
       <div class="ctas reveal">
         <a href="#carta" class="btn btn-primary">Ver la carta <span aria-hidden="true">→</span></a>
         <a href="#visitanos" class="btn btn-ghost">Horarios</a>
       </div>
       <ul class="hero-meta reveal">
-        <li><span aria-hidden="true">🕘</span> Lun a sáb 9–20 · dom 9–14</li>
-        <li><span aria-hidden="true">📍</span> Las Condes</li>
-        <li><span aria-hidden="true">🐶</span> Pet friendly</li>
+        <li>Lun a sáb 9–20 · dom 9–14</li>
+        <li>Las Condes</li>
+        <li>Pet friendly</li>
       </ul>
     </div>
 
@@ -602,26 +587,18 @@ html:not(.js) .loader{display:none}
         <text><textPath href="#circ">maru's coffee · café y bollería artesanal · maru's coffee · café y bollería artesanal ·</textPath></text>
       </svg>
       <div class="plate"><img class="disc-photo" src="img/hero.jpg" alt="" onerror="this.remove()"></div>
-      <div class="sticker"><i>🥐</i>Recién horneadas</div>
-      <div class="sticker s2"><i>🧉</i>Mate & café</div>
+      <div class="sticker">Recién horneadas</div>
+      <div class="sticker s2">Mate y café</div>
     </div>
   </div>
 </section>
-
-<div class="marquee" id="marquee">
-  <button class="marquee-toggle" id="marqueeToggle" type="button" aria-pressed="false" aria-label="Pausar el texto en movimiento"><span aria-hidden="true"></span></button>
-  <div class="marquee-track" aria-hidden="true">
-    <span>Medialunas</span><span>Croissants</span><span>Dulce de leche</span><span>Café de especialidad</span><span>Tostadas</span><span>Mate</span><span>Bollería artesanal</span>
-    <span>Medialunas</span><span>Croissants</span><span>Dulce de leche</span><span>Café de especialidad</span><span>Tostadas</span><span>Mate</span><span>Bollería artesanal</span>
-  </div>
-</div>
 
 <!-- ===== CARTA ===== -->
 <section id="carta">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Hecho a mano, <em>con amor argentino</em></h2>
-      <p>Tres categorías, cero complicaciones. Toca un producto para conocerlo.</p>
+      <h2>Nuestra carta</h2>
+      <p>Toca un producto para ver el detalle.</p>
     </div>
 
     <div class="tabs reveal" role="tablist" aria-label="Categorías">
@@ -638,18 +615,17 @@ html:not(.js) .loader{display:none}
 <!-- ===== DEL HORNO: galería horizontal (con GSAP se desplaza al hacer scroll) ===== -->
 <section class="gallery" id="horno" aria-labelledby="galTitle">
   <div class="gal-pin">
-    <div class="gal-bg" aria-hidden="true">hecho a mano · todos los días · hecho a mano ·</div>
     <div class="gal-track">
       <div class="gal-intro">
-        <h2 id="galTitle">Un día en <em>Maru's</em></h2>
+        <h2 id="galTitle">De la vitrina</h2>
         <p>Recorre lo que sale cada día de nuestra vitrina.</p>
         <span class="gal-arrow" aria-hidden="true">→</span>
       </div>
-      <figure class="gal-item" style="--h:64vh;--ar:3/4;--mt:-6vh"><div class="gal-frame"><img src="img/hero.jpg" alt="Croissant bicolor sobre un vaso de Maru's" loading="lazy"></div><figcaption>Bicolor, recién salido</figcaption></figure>
+      <figure class="gal-item" style="--h:64vh;--ar:3/4;--mt:-6vh"><div class="gal-frame"><img src="img/croissant-pistacho.jpg" alt="Croissant bicolor de pistacho" loading="lazy"></div><figcaption>Croissant pistacho</figcaption></figure>
       <figure class="gal-item" style="--h:46vh;--ar:1/1;--mt:14vh"><div class="gal-frame"><img src="img/croissant-colores.jpg" alt="Croissants fucsia y verde" loading="lazy"></div><figcaption>Los de colores</figcaption></figure>
-      <figure class="gal-item" style="--h:58vh;--ar:4/5;--mt:-10vh"><div class="gal-frame"><img src="img/lotus.jpg" alt="Croissant Lotus" loading="lazy"></div><figcaption>Lotus, el favorito</figcaption></figure>
+      <figure class="gal-item" style="--h:58vh;--ar:4/5;--mt:-10vh"><div class="gal-frame"><img src="img/levain.jpg" alt="Galletas levain" loading="lazy"></div><figcaption>Levain cookies</figcaption></figure>
       <figure class="gal-item" style="--h:44vh;--ar:1/1;--mt:12vh"><div class="gal-frame"><img src="img/latte.jpg" alt="Latte con arte latte" loading="lazy"></div><figcaption>Latte de la casa</figcaption></figure>
-      <figure class="gal-item" style="--h:60vh;--ar:4/5;--mt:-4vh"><div class="gal-frame"><img src="img/tostadas.jpg" alt="Tostadas de masa madre con salmón" loading="lazy"></div><figcaption>Brunch sin apuro</figcaption></figure>
+      <figure class="gal-item" style="--h:60vh;--ar:4/5;--mt:-4vh"><div class="gal-frame"><img src="img/tostadas.jpg" alt="Tostadas de masa madre con salmón" loading="lazy"></div><figcaption>Tostadas de masa madre</figcaption></figure>
       <figure class="gal-item" style="--h:48vh;--ar:1/1;--mt:10vh"><div class="gal-frame"><img src="img/croissant-serrano.jpg" alt="Croissant con jamón serrano y burrata" loading="lazy"></div><figcaption>Serrano & burrata</figcaption></figure>
       <figure class="gal-item" style="--h:56vh;--ar:3/4;--mt:-8vh"><div class="gal-frame"><img src="img/cafe-frio.jpg" alt="Café frío con espuma" loading="lazy"></div><figcaption>Café frío</figcaption></figure>
       <div class="gal-end">
@@ -665,8 +641,8 @@ html:not(.js) .loader{display:none}
   <div class="wrap">
     <div class="reveal">
       <span class="eyebrow">El favorito de la vitrina</span>
-      <h2>Croissant <em>Lotus</em></h2>
-      <p>Hojaldre laminado a mano, relleno de crema Biscoff y coronado con una galleta Lotus entera. Crujiente por fuera, cremoso por dentro… y se acaba temprano.</p>
+      <h2>Croissant Lotus</h2>
+      <p>Croissant de hojaldre con crema y una galleta Lotus encima.</p>
       <div class="ctas" style="margin-top:30px;display:flex;gap:12px;flex-wrap:wrap">
         <a href="#visitanos" class="btn btn-primary">Ven a probarlo</a>
       </div>
@@ -690,13 +666,13 @@ html:not(.js) .loader{display:none}
   <div class="wrap">
     <div class="shop-head reveal">
       <div>
-        <h2>Pide online, <em>del horno a tu mesa</em></h2>
-        <p>Arma tu pedido aquí mismo, elige retiro en el local o despacho y confírmalo en un par de toques.</p>
+        <h2>Pide online</h2>
+        <p>Arma tu pedido y elige si lo retiras en el local o te lo despachamos.</p>
       </div>
       <div class="shop-filter" role="group" aria-label="Filtrar tienda">
         <button class="chip" aria-pressed="true" data-shop="all">Todo</button>
-        <button class="chip" aria-pressed="false" data-shop="medialunas">Medialunas</button>
-        <button class="chip" aria-pressed="false" data-shop="pizzas">Pizzas</button>
+        <button class="chip" aria-pressed="false" data-shop="bolleria">Bollería</button>
+        <button class="chip" aria-pressed="false" data-shop="salado">Salado</button>
       </div>
     </div>
 
@@ -723,13 +699,13 @@ html:not(.js) .loader{display:none}
       </div>
     </div>
     <div class="reveal">
-      <h2>Un pedacito de <em>Buenos Aires</em> en Santiago</h2>
-      <p>Maru's nace de las manos de <strong>Maru Ferres</strong> y de la tradición de <strong>Panadería Argentina</strong>, que hornea desde 2020. Un rincón argentino en Santiago para tomar café sin apuro, con la medialuna de siempre.</p>
-      <p>Cada pieza se lamina a mano con mantequilla de verdad. Sin atajos.</p>
+      <h2>Un pedacito de Buenos Aires en Santiago</h2>
+      <p>Maru's nace de las manos de <strong>Maru Ferres</strong> y de la tradición de <strong>Panadería Argentina</strong>, que hornea desde 2020. Un café argentino en Santiago, con la medialuna de siempre.</p>
+      <p>Cada pieza se lamina a mano con mantequilla.</p>
       <div class="perks">
-        <div class="perk"><i>🥐</i><strong>Artesanal</strong><span>Horneado diario</span></div>
-        <div class="perk"><i>🐶</i><strong>Pet friendly</strong><span>Tu perro es bienvenido</span></div>
-        <div class="perk"><i>🧉</i><strong>Sabor porteño</strong><span>Dulce de leche y mate</span></div>
+        <div class="perk"><strong>Artesanal</strong><span>Horneado diario</span></div>
+        <div class="perk"><strong>Pet friendly</strong><span>Tu perro es bienvenido</span></div>
+        <div class="perk"><strong>Sabor porteño</strong><span>Dulce de leche y mate</span></div>
       </div>
     </div>
   </div>
@@ -739,8 +715,8 @@ html:not(.js) .loader{display:none}
 <section class="visit" id="visitanos">
   <div class="wrap">
     <div class="reveal">
-      <h2>Pasa por tu <em>medialuna</em> de hoy</h2>
-      <p class="address">📍 Av. Las Condes 8586, Las Condes, Santiago</p>
+      <h2>Visítanos</h2>
+      <p class="address">Av. Las Condes 8586, Las Condes, Santiago</p>
       <div class="ctas">
         <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Av.+Las+Condes+8586+Santiago" target="_blank" rel="noopener">Abrir en Maps</a>
         <a class="btn btn-ghost" href="https://www.instagram.com/maruscoffee/" target="_blank" rel="noopener">Instagram</a>
@@ -761,7 +737,6 @@ html:not(.js) .loader{display:none}
 <footer>
   <div class="wrap">
     <div class="dots" id="dots" aria-hidden="true"></div>
-    <p class="dots-hint" aria-hidden="true">Toca la masa ✦</p>
     <span class="logo"><b>M's</b><small>COFFEE</small></span>
     <nav aria-label="Enlaces">
       <a href="https://www.instagram.com/maruscoffee/" target="_blank" rel="noopener">@maruscoffee</a>
@@ -816,23 +791,27 @@ html:not(.js) .loader{display:none}
    price: deja "" si no quieres mostrar precio.
    ========================================================= */
 const PRODUCTS = [
-  {cat:'dulce', sku:'ml-trad', name:'Medialuna Tradicional', price:'$2.400', desc:'Masa de hojaldre 100% mantequilla, 105 g de pura tradición argentina.', tags:['Clásica','105 g'], art:'classic', bg:'#f6e6cf', foto:'medialuna-tradicional.jpg', badge:'La de siempre'},
+  {cat:'dulce', sku:'ml-trad', name:'Medialuna Tradicional', price:'$2.400', desc:'Hojaldre 100% mantequilla. 105 g.', tags:['Clásica','105 g'], art:'classic', bg:'#f6e6cf', foto:'medialuna-tradicional.jpg', badge:'La de siempre'},
   {cat:'dulce', sku:'ml-ddl', name:'Medialuna Dulce de Leche', price:'$2.800', desc:'Hojaldre 100% mantequilla relleno con dulce de leche argentino.', tags:['Rellena','Dulce de leche'], art:'ddl', bg:'#f1ddc8', foto:'medialuna-ddl.jpg', badge:'Favorita'},
   {cat:'dulce', sku:'ml-past', name:'Medialuna Pastelera', price:'$2.800', desc:'Hojaldre 100% mantequilla relleno con crema pastelera 100% casera.', tags:['Rellena','Pastelera casera'], art:'pastelera', bg:'#f7ecd5', foto:'medialuna-pastelera.jpg'},
+  {cat:'dulce', sku:'ml-nut', name:'Medialuna Nutella', price:'$3.200', desc:'Hojaldre 100% mantequilla relleno con Nutella.', tags:['Rellena','Nutella'], art:'ddl', bg:'#eadbcc', foto:'medialuna-nutella.jpg'},
   {cat:'dulce', name:'Croissant Pistacho', price:'', desc:'Croissant bicolor con crema y crocante de pistacho.', tags:['Bicolor','Pistacho'], art:'pistacho', bg:'#e2ecd9', foto:'croissant-pistacho.jpg'},
   {cat:'dulce', name:'Croissant Frutos Rojos', price:'', desc:'Croissant de mantequilla con crema y arándanos frescos.', tags:['Frutal'], art:'berry', bg:'#f4dde3', foto:'croissant-frutos-rojos.jpg'},
   {cat:'dulce', name:'Croissant Mazapán Nuez', price:'', desc:'Relleno de mazapán, cubierto de nueces y glaseado.', tags:['Nuez','Mazapán'], art:'classic', bg:'#f1e3d0', foto:'croissant-mazapan.jpg'},
   {cat:'dulce', name:'Danesa de Manzana', price:'', desc:'Hojaldre con manzana especiada y crema.', tags:['Manzana'], art:'pastelera', bg:'#f5e6cf', foto:'danesa-manzana.jpg'},
   {cat:'dulce', name:'Levain Cookies', price:'', desc:'Galletas gruesas estilo Nueva York, crujientes por fuera y blandas por dentro.', tags:['Cookies','Para compartir'], art:'classic', bg:'#efe2d3', foto:'levain.jpg'},
-  {cat:'dulce', name:'Croissants de Colores', price:'', desc:'Nuestros croissants fucsia y verde, los más fotografiados de la vitrina.', tags:['Edición especial'], art:'pink', bg:'#ecdcef', foto:'croissant-colores.jpg', badge:'Instagrameable'},
+  {cat:'dulce', name:'Croissants de Colores', price:'', desc:'Croissants de hojaldre en fucsia y verde.', tags:['Edición especial'], art:'pink', bg:'#ecdcef', foto:'croissant-colores.jpg', badge:'Instagrameable'},
   {cat:'salado', name:'Croissant Salmón', price:'', desc:'Croissant mantequilloso con salmón, tomate y hojas verdes.', tags:['Salmón'], art:'salmon', bg:'#f6e1d6', foto:'croissant-salmon.jpg'},
   {cat:'salado', name:'Tostadas Maru\'s', price:'', desc:'Pan de masa madre tostado con salmón, queso crema y brotes.', tags:['Masa madre','Brunch'], art:'toast', bg:'#efe6d6', foto:'tostadas.jpg', badge:'Brunch'},
   {cat:'salado', name:'Ensalada Salmón', price:'', desc:'Mix de hojas, salmón, tomate cherry y queso.', tags:['Liviano','Salmón'], art:'salmon', bg:'#e2ecd9', foto:'ensalada-salmon.jpg'},
   {cat:'salado', name:'Croissant Serrano', price:'', desc:'Croissant crujiente con jamón serrano, burrata y brotes.', tags:['Serrano','Burrata'], art:'serrano', bg:'#f3dcd5', foto:'croissant-serrano.jpg'},
   {cat:'salado', name:'Invertido Pastrami', price:'', desc:'Hojaldre invertido relleno de pastrami.', tags:['Pastrami'], art:'classic', bg:'#f1e3d0', foto:'invertido-pastrami.jpg'},
+  {cat:'salado', sku:'pz-moz', name:'Pizza Mozzarella', price:'$16.000', desc:'Individual de 23 cm con 180 g de mozzarella argentina, orégano y aceitunas.', tags:['Pizza','23 cm'], art:'pizza', bg:'#f4e3d3', foto:'pizza-mozzarella.jpg'},
+  {cat:'salado', sku:'pz-fug', name:'Pizza Fugazza', price:'$16.000', desc:'Individual de 23 cm con mozzarella argentina, cebolla, orégano y aceitunas.', tags:['Pizza','23 cm'], art:'pizza', bg:'#f1e6d2', foto:'pizza-fugazza.jpg'},
+  {cat:'salado', sku:'pz-jym', name:'Pizza Jamón y Morrón', price:'$17.000', desc:'Individual de 23 cm con mozzarella, jamón artesanal y morrón.', tags:['Pizza','23 cm'], art:'pizza', bg:'#f3dcd5', foto:'pizza-jamon-morron.jpg'},
   {cat:'bebidas', name:'Latte', price:'', desc:'Espresso con leche texturizada y latte art.', tags:['Caliente'], art:'latte', bg:'#efe2d3', foto:'latte.jpg'},
   {cat:'bebidas', name:'Cappuccino', price:'', desc:'Espresso, leche espumada y cacao espolvoreado.', tags:['Caliente'], art:'latte', bg:'#f3ead8', foto:'cappuccino.jpg'},
-  {cat:'bebidas', name:'Café Frío', price:'', desc:'Café helado con espuma cremosa. Para las tardes de Santiago.', tags:['Frío'], art:'iced', bg:'#e1ebec', foto:'cafe-frio.jpg', badge:'Verano'},
+  {cat:'bebidas', name:'Café Frío', price:'', desc:'Café helado con espuma cremosa.', tags:['Frío'], art:'iced', bg:'#e1ebec', foto:'cafe-frio.jpg', badge:'Verano'},
   {cat:'bebidas', name:'Mate en Lata', price:'', desc:'Mate argentino en lata, en varios sabores. Listo para llevar.', tags:['Argentino','Para llevar'], art:'mate', bg:'#dde7d6', foto:'mate.jpg'}
 ];
 const CAT_LABEL = {dulce:'Bollería', salado:'Salado', bebidas:'Bebidas'};
@@ -867,13 +846,14 @@ const CONFIG = {
    Para agregar un producto: copia una línea y cambia el id.
    ========================================================= */
 const SHOP = [
-  {id:'ml-trad', g:'medialunas', name:'Medialuna Tradicional', price:2400, desc:'Hojaldre 100% mantequilla. 105 g.', art:'classic', bg:'#f6e6cf', foto:'medialuna-tradicional.jpg'},
-  {id:'ml-ddl', g:'medialunas', name:'Medialuna Dulce de Leche', price:2800, desc:'Hojaldre 100% mantequilla, rellena con dulce de leche.', art:'ddl', bg:'#f1ddc8', foto:'medialuna-ddl.jpg'},
-  {id:'ml-past', g:'medialunas', name:'Medialuna Pastelera', price:2800, desc:'Hojaldre 100% mantequilla, rellena con pastelera casera.', art:'pastelera', bg:'#f7ecd5', foto:'medialuna-pastelera.jpg'},
-  {id:'ml-nut', g:'medialunas', name:'Medialuna Nutella', price:3200, desc:'Hojaldre 100% mantequilla, rellena con Nutella.', art:'ddl', bg:'#eadbcc', foto:'medialuna-nutella.jpg'},
-  {id:'pz-moz', g:'pizzas', name:'Pizza Mozzarella', price:16000, desc:'Individual 23 cm, 180 g de mozzarella argentina, orégano y aceitunas.', art:'pizza', bg:'#f4e3d3', foto:'pizza-mozzarella.jpg'},
-  {id:'pz-fug', g:'pizzas', name:'Pizza Fugazza', price:16000, desc:'Individual 23 cm, mozzarella argentina, cebolla, orégano y aceitunas.', art:'pizza', bg:'#f1e6d2', foto:'pizza-fugazza.jpg'},
-  {id:'pz-jym', g:'pizzas', name:'Pizza Jamón y Morrón', price:17000, desc:'Individual 23 cm, mozzarella, jamón artesanal y morrón.', art:'pizza', bg:'#f3dcd5', foto:'pizza-jamon-morron.jpg'}
+  {id:'ml-trad', g:'bolleria', name:'Medialuna Tradicional', price:2400, desc:'Hojaldre 100% mantequilla. 105 g.', art:'classic', bg:'#f6e6cf', foto:'medialuna-tradicional.jpg'},
+  {id:'ml-ddl', g:'bolleria', name:'Medialuna Dulce de Leche', price:2800, desc:'Hojaldre 100% mantequilla, rellena con dulce de leche.', art:'ddl', bg:'#f1ddc8', foto:'medialuna-ddl.jpg'},
+  {id:'ml-past', g:'bolleria', name:'Medialuna Pastelera', price:2800, desc:'Hojaldre 100% mantequilla, rellena con pastelera casera.', art:'pastelera', bg:'#f7ecd5', foto:'medialuna-pastelera.jpg'},
+  {cat:'dulce', sku:'ml-nut', name:'Medialuna Nutella', price:'$3.200', desc:'Hojaldre 100% mantequilla relleno con Nutella.', tags:['Rellena','Nutella'], art:'ddl', bg:'#eadbcc', foto:'medialuna-nutella.jpg'},
+  {id:'ml-nut', g:'bolleria', name:'Medialuna Nutella', price:3200, desc:'Hojaldre 100% mantequilla, rellena con Nutella.', art:'ddl', bg:'#eadbcc', foto:'medialuna-nutella.jpg'},
+  {id:'pz-moz', g:'salado', name:'Pizza Mozzarella', price:16000, desc:'Individual 23 cm, 180 g de mozzarella argentina, orégano y aceitunas.', art:'pizza', bg:'#f4e3d3', foto:'pizza-mozzarella.jpg'},
+  {id:'pz-fug', g:'salado', name:'Pizza Fugazza', price:16000, desc:'Individual 23 cm, mozzarella argentina, cebolla, orégano y aceitunas.', art:'pizza', bg:'#f1e6d2', foto:'pizza-fugazza.jpg'},
+  {id:'pz-jym', g:'salado', name:'Pizza Jamón y Morrón', price:17000, desc:'Individual 23 cm, mozzarella, jamón artesanal y morrón.', art:'pizza', bg:'#f3dcd5', foto:'pizza-jamon-morron.jpg'}
 ];
 const byId = Object.fromEntries(SHOP.map(p=>[p.id,p]));
 const clp = n => '$' + Math.round(n).toLocaleString('es-CL');
@@ -1042,7 +1022,7 @@ function renderDrawer(){
           <button type="button" class="remove" data-remove="${id}">Quitar</button></div>
         <div class="line-right"><strong>${clp(p.price*cart[id])}</strong>${stepper(id)}</div>
       </div>`}).join('')
-      : `<div class="empty"><span class="logo empty-mark" aria-hidden="true"><b>M's</b><small>COFFEE</small></span><h3>Tu carrito está vacío</h3><p>Las medialunas no se piden solas…</p>
+      : `<div class="empty"><span class="logo empty-mark" aria-hidden="true"><b>M's</b><small>COFFEE</small></span><h3>Tu carrito está vacío</h3><p>Agrega productos desde la tienda.</p>
          <button class="btn btn-primary" style="margin-top:20px" data-close-cart data-goto="#pedir">Ver productos</button></div>`;
   } else if(view==='checkout'){
     const today=new Date().toLocaleDateString('en-CA',{timeZone:'America/Santiago'});
@@ -1050,10 +1030,10 @@ function renderDrawer(){
     dBody.innerHTML=`<form id="orderForm" novalidate>
       <fieldset class="fs"><legend>¿Cómo lo recibes?</legend>
         <div class="seg">
-          <label class="opt"><input type="radio" name="entrega" value="retiro" ${draft.entrega!=='despacho'?'checked':''}><i aria-hidden="true">🏪</i><span><strong>Retiro en local</strong><span>Gratis</span></span></label>
-          <label class="opt"><input type="radio" name="entrega" value="despacho" ${draft.entrega==='despacho'?'checked':''}><i aria-hidden="true">🛵</i><span><strong>Despacho</strong><span>${clp(D.costo)} · desde ${clp(D.minimo)}</span></span></label>
+          <label class="opt"><input type="radio" name="entrega" value="retiro" ${draft.entrega!=='despacho'?'checked':''}><span><strong>Retiro en local</strong><span>Gratis</span></span></label>
+          <label class="opt"><input type="radio" name="entrega" value="despacho" ${draft.entrega==='despacho'?'checked':''}><span><strong>Despacho</strong><span>${clp(D.costo)} · desde ${clp(D.minimo)}</span></span></label>
         </div>
-        <p class="hint" id="retiroInfo" style="margin-top:10px">📍 Retiras en ${esc(CONFIG.local)}.</p>
+        <p class="hint" id="retiroInfo" style="margin-top:10px">Retiras en ${esc(CONFIG.local)}.</p>
         <div id="despachoFields">
           <div class="field"><label for="fComuna">Comuna</label>
             <select id="fComuna" name="comuna"><option value="">Elige tu comuna</option>${D.comunas.map(c=>`<option ${draft.comuna===c?'selected':''}>${c}</option>`).join('')}</select>
@@ -1076,8 +1056,8 @@ function renderDrawer(){
       </fieldset>
       <fieldset class="fs"><legend>¿Cómo pagas?</legend>
         <div class="stack">
-          <label class="opt"><input type="radio" name="pago" value="Transferencia bancaria" ${draft.pago!=='Pago al retirar o recibir'?'checked':''}><i aria-hidden="true">🏦</i><span><strong>Transferencia bancaria</strong><span>Te mostramos los datos al confirmar.</span></span></label>
-          <label class="opt"><input type="radio" name="pago" value="Pago al retirar o recibir" ${draft.pago==='Pago al retirar o recibir'?'checked':''}><i aria-hidden="true">💳</i><span><strong>Al retirar o recibir</strong><span>Efectivo o tarjeta.</span></span></label>
+          <label class="opt"><input type="radio" name="pago" value="Transferencia bancaria" ${draft.pago!=='Pago al retirar o recibir'?'checked':''}><span><strong>Transferencia bancaria</strong><span>Te mostramos los datos al confirmar.</span></span></label>
+          <label class="opt"><input type="radio" name="pago" value="Pago al retirar o recibir" ${draft.pago==='Pago al retirar o recibir'?'checked':''}><span><strong>Al retirar o recibir</strong><span>Efectivo o tarjeta.</span></span></label>
         </div>
       </fieldset>
       <div class="field"><label for="fNotas">Notas <small>(opcional)</small></label><textarea id="fNotas" name="notas" placeholder="Ej: sin aceitunas, tocar timbre 2 veces"></textarea></div>
@@ -1126,11 +1106,11 @@ function submitOrder(e){
   const text=[
     `¡Hola Maru's! Quiero hacer este pedido (${id}):`,'',...lines,'',
     `Subtotal: ${clp(sub)}`, isDel?`Despacho: ${clp(del)}`:'Retiro en local: gratis', `*Total: ${clp(sub+del)}*`,'',
-    isDel?`🛵 Despacho a: ${f.direccion.value.trim()}, ${f.comuna.value}`:`🏪 Retiro en: ${CONFIG.local}`,
-    `📅 ${fecha} · ${f.franja.value}`,
-    `💳 Pago: ${f.pago.value}`,
-    `🙋 ${f.nombre.value.trim()} · ${f.telefono.value.trim()}${f.email.value.trim()?' · '+f.email.value.trim():''}`,
-    f.notas.value.trim()?`📝 ${f.notas.value.trim()}`:''
+    isDel?`Despacho a: ${f.direccion.value.trim()}, ${f.comuna.value}`:`Retiro en: ${CONFIG.local}`,
+    `Fecha: ${fecha} · ${f.franja.value}`,
+    `Pago: ${f.pago.value}`,
+    `Cliente: ${f.nombre.value.trim()} · ${f.telefono.value.trim()}${f.email.value.trim()?' · '+f.email.value.trim():''}`,
+    f.notas.value.trim()?`Notas: ${f.notas.value.trim()}`:''
   ].filter((l,i,a)=>l!==''||a[i-1]!=='').join('\n').trim();
   lastOrder={id,text,total:sub+del,pago:f.pago.value};
   store.set('marus-ultimo-pedido',lastOrder);
@@ -1288,14 +1268,7 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{
 }),{threshold:.15});
 /* Animaciones infinitas solo mientras su sección se ve */
 const onScreen=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('offscreen',!e.isIntersecting)));
-document.querySelectorAll('.hero,.marquee,.gallery,.feature,.visit').forEach(el=>onScreen.observe(el));
-/* Franja de texto: botón de pausa (WCAG 2.2.2) */
-const marquee=document.getElementById('marquee'), mToggle=document.getElementById('marqueeToggle');
-mToggle.addEventListener('click',()=>{
-  const p=marquee.classList.toggle('paused');
-  mToggle.setAttribute('aria-pressed',p);
-  mToggle.setAttribute('aria-label',p?'Reanudar el texto en movimiento':'Pausar el texto en movimiento');
-});
+document.querySelectorAll('.hero,.gallery,.feature,.visit').forEach(el=>onScreen.observe(el));
 /* Se arman desde el inicio (así el alto de la página no cambia al hacer scroll);
    su animación de entrada queda en pausa hasta que se ven. */
 grid.classList.add('wait'); shopTrack.classList.add('wait');
