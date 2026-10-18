@@ -383,8 +383,13 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 .field.bad input,.field.bad select{border-color:var(--danger)}
 .field .err{font-size:.8rem;color:var(--danger);display:none}
 .field.bad .err{display:block}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.row2 .field{margin-top:14px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.row2 .field{margin-top:14px;min-width:0}
+/* Día y horario: el campo de fecha de iOS no se achica solo y tapaba al de horario */
+.field input,.field select{min-width:0;max-width:100%}
+.field input[type=date]{-webkit-appearance:none;appearance:none;display:block}
+.field input[type=date]::-webkit-date-and-time-value{text-align:left}
+@media (max-width:480px){.row2{grid-template-columns:1fr}.row2 .field+.field{margin-top:14px!important}}
 
 .done{text-align:center;padding:30px 0 10px}
 .check{width:88px;height:88px;margin:0 auto 18px;border-radius:50%;background:var(--teal);display:grid;place-items:center;animation:pop .7s var(--ease)}
@@ -428,7 +433,8 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
 .gal-intro p{color:var(--muted);max-width:30ch}
 .gal-arrow{display:inline-grid;place-items:center;width:56px;height:56px;margin-top:24px;border-radius:50%;background:var(--teal);color:#fff;font-size:1.4rem;animation:nudge 1.6s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateX(10px)}}
-.gal-item{flex:none;height:var(--h);margin-top:var(--mt);display:flex;flex-direction:column;gap:12px}
+/* Todas las fotos de la vitrina con el mismo tamaño y proporción (4:5) */
+.gal-item{--h:58vh!important;--ar:4/5!important;flex:none;height:var(--h);margin-top:var(--mt);display:flex;flex-direction:column;gap:12px}
 .gal-frame{height:100%;aspect-ratio:var(--ar);border-radius:var(--radius);overflow:hidden;background:var(--brown-soft);box-shadow:0 30px 60px -30px rgba(18,53,57,.5)}
 .gal-frame img{width:118%;max-width:none;height:100%;object-fit:cover}
 .gal-item figcaption{font-family:var(--brush);font-size:1.5rem;color:var(--brown);padding-left:6px}
@@ -441,7 +447,8 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
   .gal-pin::-webkit-scrollbar{display:none}
   .gal-track{padding:0 16px;gap:18px;align-items:flex-start}
   .gal-intro{width:78vw;scroll-snap-align:start}
-  .gal-item{--h:min(56vh,420px)!important;margin-top:0!important;scroll-snap-align:center}
+  .gal-item{height:auto;width:min(72vw,320px);margin-top:0!important;scroll-snap-align:center}
+  .gal-frame{height:auto;width:100%}
   .gal-frame img{width:100%}
   .gal-end{scroll-snap-align:end;padding-right:16px}
 }
