@@ -56,9 +56,8 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .wrap{width:min(1180px,100% - 32px);margin-inline:auto}
 
 /* ===== Logo ===== */
-.logo{display:inline-flex;align-items:flex-end;gap:2px;color:var(--teal);line-height:.8}
-.logo b{font-family:var(--brush);font-weight:400;font-size:2.2rem;letter-spacing:-1px}
-.logo small{font-size:max(.55rem,11px);font-weight:700;letter-spacing:.18em;color:var(--brown);transform:rotate(-12deg) translateY(-2px)}
+.logo{display:inline-flex;align-items:center;line-height:0}
+.logo img{display:block;height:52px;width:auto}
 
 /* ===== Nav ===== */
 .nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .4s,box-shadow .4s,padding .4s;padding:20px 0}
@@ -100,9 +99,8 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .hero-art{position:relative;aspect-ratio:1;max-width:560px;justify-self:center;width:100%}
 .plate{position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3a6a70,var(--teal) 55%,var(--teal-deep));box-shadow:0 50px 80px -30px rgba(18,53,57,.6),inset 0 0 0 14px rgba(255,255,255,.06);transform:scale(.6);opacity:0;transition:transform 1.4s var(--ease) .2s,opacity 1s .2s}
 .loaded .plate{transform:none;opacity:1}
-.ring{position:absolute;inset:0;animation:spin 28s linear infinite}
+.ring{position:absolute;inset:0}
 .ring text{font-family:var(--sans);font-weight:700;font-size:13.5px;letter-spacing:5px;fill:var(--teal);text-transform:uppercase}
-@keyframes spin{to{transform:rotate(360deg)}}
 .hero-croissant{position:absolute;inset:22% 12%;display:grid;place-items:center;transform:translateY(-60px) rotate(-25deg) scale(.4);opacity:0;transition:transform 1.6s var(--ease) .5s,opacity .8s .5s}
 .loaded .hero-croissant{transform:none;opacity:1}
 .hero-croissant .float{animation:float 6s ease-in-out infinite;filter:drop-shadow(0 30px 25px rgba(0,0,0,.35));width:100%}
@@ -112,11 +110,6 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .steam path{fill:none;stroke:var(--brown);stroke-width:3;stroke-linecap:round;opacity:0;animation:steam 3s ease-in-out infinite}
 .steam path:nth-child(2){animation-delay:.8s}.steam path:nth-child(3){animation-delay:1.6s}
 @keyframes steam{0%{opacity:0;transform:translateY(8px)}40%{opacity:.6}100%{opacity:0;transform:translateY(-14px)}}
-.sticker{position:absolute;left:0;top:14%;background:var(--white);border-radius:var(--radius-m);padding:12px 16px;box-shadow:0 18px 40px -18px rgba(0,0,0,.3);font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:10px;transform:translateX(-30px) rotate(-6deg);opacity:0;transition:transform 1s var(--ease) 1.2s,opacity .6s 1.2s}
-.sticker.s2{left:auto;right:0;top:auto;bottom:34%;transform:translateX(30px) rotate(5deg);transition-delay:1.4s}
-.loaded .sticker{opacity:1;transform:rotate(-6deg)}
-.loaded .sticker.s2{transform:rotate(5deg)}
-.sticker i{font-style:normal;font-size:1.4rem}
 
 /* Fotos reales dentro de los círculos (si existen, reemplazan la ilustración) */
 .plate,.feature-stage .disc{overflow:hidden}
@@ -136,8 +129,7 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .thumb .ph-mark,.fly .ph-mark{display:none}
 .thumb .ph-name,.fly .ph-name{font-size:.78rem;line-height:1.05}
 .empty-mark{margin:0 auto 18px;justify-content:center}
-.empty-mark b{font-size:4.5rem}
-.empty-mark small{font-size:.8rem}
+.empty-mark img{height:96px}
 /* Animaciones infinitas en pausa cuando su sección no está en pantalla */
 .offscreen,.offscreen *{animation-play-state:paused!important}
 @keyframes marq{to{transform:translateX(-50%)}}
@@ -163,8 +155,8 @@ section{padding:120px 0}
 .grid>.card{flex:0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols))}
 @media (max-width:900px){.grid{--cols:2;--gap:18px}}
 @media (max-width:580px){.grid{--cols:1}}
-.card{position:relative;background:var(--white);border-radius:var(--radius);overflow:hidden;cursor:pointer;transform-style:preserve-3d;box-shadow:0 20px 40px -28px rgba(18,53,57,.45);transition:box-shadow .5s var(--ease);opacity:0;transform:translateY(60px) rotateX(18deg) scale(.94)}
-.card.show{animation:cardIn .9s var(--ease) forwards;animation-delay:calc(var(--i) * 90ms)}
+.card{position:relative;background:var(--white);border-radius:var(--radius);overflow:hidden;cursor:pointer;box-shadow:0 20px 40px -28px rgba(18,53,57,.45);transition:box-shadow .5s var(--ease);opacity:0;transform:translateY(24px)}
+.card.show{animation:cardIn .6s var(--ease) forwards;animation-delay:calc(var(--i) * 50ms)}
 @keyframes cardIn{to{opacity:1;transform:none}}
 .card.out{animation:cardOut .35s ease forwards}
 @keyframes cardOut{to{opacity:0;transform:translateY(-20px) scale(.96)}}
@@ -177,8 +169,6 @@ section{padding:120px 0}
 .card:hover .art{transform:translateZ(60px) rotate(-8deg) scale(1.1)}
 .card-media .photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
 .card:hover .photo{transform:scale(1.08)}
-.shine{position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.45),transparent 45%);opacity:0;transition:opacity .4s;pointer-events:none;mix-blend-mode:soft-light}
-.card:hover .shine{opacity:1}
 .badge{position:absolute;top:14px;left:14px;z-index:2;background:var(--brown);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;padding:6px 12px;border-radius:999px;text-transform:uppercase}
 .card-body{padding:20px 22px 24px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .card h3{font-family:var(--serif);font-size:1.25rem;color:var(--teal-deep);line-height:1.2}
@@ -202,9 +192,6 @@ section{padding:120px 0}
 .cookie{position:absolute;width:30%;right:18%;top:30%;transform:translateY(-120px) rotate(-40deg);opacity:0;transition:transform 1.2s var(--ease) .6s,opacity .6s .6s}
 .feature-stage.in .cookie{transform:rotate(12deg);opacity:1}
 .feature .btn-primary{background:var(--butter);color:var(--teal-deep)}
-.crumbs span{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--butter);opacity:0}
-.feature-stage.in .crumbs span{animation:crumb 1.4s var(--ease) forwards;animation-delay:calc(.9s + var(--d))}
-@keyframes crumb{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:.9;transform:translate(var(--x),var(--y))}}
 
 /* ===== Pide online ===== */
 .shop{background:var(--teal-soft);overflow:hidden}
@@ -217,8 +204,8 @@ section{padding:120px 0}
 .chip:hover{transform:translateY(-2px)}
 .chip[aria-pressed=true]{background:var(--teal);color:#fff}
 .shop-track{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 30px;margin:0 -4px;scrollbar-width:thin;scrollbar-color:var(--teal) transparent}
-.shop-item{flex:0 0 clamp(240px,28vw,300px);scroll-snap-align:start;background:var(--white);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 40px -28px rgba(18,53,57,.5);opacity:0;transform:translateX(80px) rotate(3deg);transition:box-shadow .4s}
-.shop-item.show{animation:shopIn .8s var(--ease) forwards;animation-delay:calc(var(--i) * 80ms)}
+.shop-item{flex:0 0 clamp(240px,28vw,300px);scroll-snap-align:start;background:var(--white);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 40px -28px rgba(18,53,57,.5);opacity:0;transform:translateY(24px);transition:box-shadow .4s}
+.shop-item.show{animation:shopIn .6s var(--ease) forwards;animation-delay:calc(var(--i) * 50ms)}
 @keyframes shopIn{to{opacity:1;transform:none}}
 .shop-item:hover{box-shadow:0 30px 50px -26px rgba(18,53,57,.6)}
 .shop-media{position:relative;aspect-ratio:1.25;background:var(--bg,var(--brown-soft));display:grid;place-items:center;overflow:hidden}
@@ -247,8 +234,8 @@ section{padding:120px 0}
 .about-visual{position:relative;aspect-ratio:4/5;border-radius:200px 200px var(--radius) var(--radius);background:var(--teal);overflow:hidden;display:grid;place-items:center}
 .about-visual .photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .sign{width:62%;aspect-ratio:1;border-radius:50%;background:var(--cream);display:grid;place-items:center;box-shadow:0 0 0 10px rgba(255,255,255,.12),0 30px 60px -30px rgba(0,0,0,.45);position:relative}
-.sign .logo b{font-size:clamp(4rem,9vw,6.5rem)}
-.sign .logo small{font-size:.9rem}
+.sign .logo img{height:auto;width:46%;margin:0 auto}
+.sign .logo{width:100%;justify-content:center}
 .sign svg{position:absolute;inset:6%;width:88%;height:88%}
 .sign text{font-family:var(--serif);font-style:italic;font-size:15px;fill:var(--teal)}
 .about h2{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1.05;color:var(--teal-deep);margin:12px 0 22px}
@@ -283,8 +270,7 @@ section{padding:120px 0}
 
 /* ===== Footer ===== */
 footer{padding:80px 0 120px;text-align:center}
-footer .logo b{font-size:4rem}
-footer .logo small{font-size:.8rem}
+footer .logo img{height:110px}
 footer p{color:var(--muted);margin-top:16px;font-size:.9rem}
 footer nav{display:flex;justify-content:center;gap:24px;margin-top:20px;font-weight:700;color:var(--teal);flex-wrap:wrap}
 footer nav a{min-height:44px;display:inline-flex;align-items:center}
@@ -408,52 +394,19 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 .fly img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
 /* ===== Capa de animación (motion.js) ===== */
-/* Preloader */
-.loader{position:fixed;inset:0;z-index:400;background:var(--cream);display:grid;place-items:center;overflow:hidden;animation:loaderOut .6s 3.4s forwards}
-@keyframes loaderOut{to{opacity:0;visibility:hidden}}
-.loader-inner{display:flex;flex-direction:column;align-items:center;gap:22px}
-.loader-logo b{font-size:clamp(6rem,18vw,11rem);clip-path:inset(0 100% 0 0);animation:loaderLogo 1s .2s var(--ease) forwards}
-.loader-logo small{font-size:clamp(.9rem,2vw,1.3rem)}
-@keyframes loaderLogo{to{clip-path:inset(0 0 0 0)}}
-.loader-count{position:absolute;right:clamp(16px,4vw,48px);bottom:clamp(12px,3vw,32px);font-family:var(--serif);font-size:clamp(3rem,9vw,7rem);line-height:1;color:var(--teal);font-variant-numeric:tabular-nums}
-.loader-count::after{content:"%";font-size:.4em;vertical-align:top;margin-left:4px;color:var(--brown)}
-.loader-panel{position:absolute;inset:0;background:var(--teal);transform:translateY(100%)}
 
 .wait .card,.wait .shop-item{animation-play-state:paused!important}
 
 /* Sin JavaScript (o si falló): todo visible, sin estados iniciales ocultos */
-html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate,.hero-croissant,.cup,.sticker){opacity:1!important;transform:none!important;animation:none!important}
-html:not(.js) .loader{display:none}
+html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!important;transform:none!important;animation:none!important}
 @media (min-width:901px){.motion .feature{min-height:100vh;display:flex;align-items:center}}
 
-/* Barra de progreso de lectura */
-.progress{position:fixed;left:0;top:0;z-index:60;width:100%;height:3px;background:var(--brown);transform-origin:0 50%;transform:scaleX(0);pointer-events:none}
 
-/* Cursor propio (solo mouse) */
-.cursor{position:fixed;left:0;top:0;z-index:500;pointer-events:none;display:none}
-.has-cursor .cursor{display:block}
-.has-cursor,.has-cursor a,.has-cursor button,.has-cursor label,.has-cursor .card{cursor:none}
-.has-cursor input,.has-cursor textarea,.has-cursor select{cursor:auto}
-.cursor-dot{width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--brown)}
-.cursor-ring{width:42px;height:42px;margin:-21px 0 0 -21px;border-radius:50%;border:1.5px solid var(--teal);display:grid;place-items:center;transition:width .4s var(--ease),height .4s var(--ease),margin .4s var(--ease),background .3s,border-color .3s,opacity .3s}
-.cursor-ring span{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .2s}
-.cursor-ring.link{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(154,91,58,.12);border-color:var(--brown)}
-.cursor-ring.label{width:92px;height:92px;margin:-46px 0 0 -46px;background:var(--teal);border-color:var(--teal)}
-.cursor-ring.label span{opacity:1}
-.cursor-ring.dark{border-color:var(--butter)}
-.cursor-ring.out{opacity:0}
-.has-magnet .btn,.has-magnet .buy,.has-magnet .chip,.has-magnet .cart-btn{transition-property:background,color,box-shadow,border-color}
 
 /* Nav: sección activa */
 .nav ul a[aria-current="true"]{color:var(--teal)}
 .nav ul a[aria-current="true"]::after{transform:scaleX(1)}
 
-/* Hero: capas con parallax por mouse (variables que mueve GSAP) */
-.hero-art{--px:0;--py:0}
-.hero-art .plate{translate:calc(var(--px) * -16px) calc(var(--py) * -16px)}
-.hero-art .ring{translate:calc(var(--px) * 10px) calc(var(--py) * 10px)}
-.hero-art .sticker{translate:calc(var(--px) * 34px) calc(var(--py) * 28px)}
-.hero-art .sticker.s2{translate:calc(var(--px) * -30px) calc(var(--py) * -24px)}
 
 /* Galería horizontal "Del horno" */
 .gallery{padding:0;background:var(--cream);position:relative}
@@ -472,9 +425,6 @@ html:not(.js) .loader{display:none}
 .gal-end{flex:none;width:min(320px,70vw);display:flex;flex-direction:column;gap:18px;align-items:flex-start}
 .gal-end p{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.6rem);color:var(--teal-deep);line-height:1.1}
 
-/* Grilla de puntos estilo anime.js (footer) */
-.dots{--cols:26;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:clamp(8px,1.4vw,16px);max-width:760px;margin:0 auto 10px;padding:10px 0}
-.dots i{display:block;aspect-ratio:1;border-radius:50%;background:var(--teal);opacity:.75;will-change:transform}
 
 @media (max-width:900px){
   .gal-pin{height:auto;display:block;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:84px 0 60px;scrollbar-width:none}
@@ -484,9 +434,7 @@ html:not(.js) .loader{display:none}
   .gal-item{--h:min(56vh,420px)!important;margin-top:0!important;scroll-snap-align:center}
   .gal-frame img{width:100%}
   .gal-end{scroll-snap-align:end;padding-right:16px}
-  .dots{--cols:14}
 }
-@media (prefers-reduced-motion:reduce){.loader,.cursor{display:none!important}}
 
 /* ===== Mobile CTA (Ley de Fitts: al alcance del pulgar) ===== */
 .mobile-cta{display:none}
@@ -520,7 +468,6 @@ html:not(.js) .loader{display:none}
   .tabs{width:100%}
   .tab{flex:1;padding:0 10px;font-size:.9rem}
   .perks{grid-template-columns:1fr}
-  .sticker{font-size:.75rem;padding:8px 12px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
@@ -530,21 +477,10 @@ html:not(.js) .loader{display:none}
 </head>
 <body>
 
-<!-- Preloader (lo anima motion.js; sin JS se oculta solo por CSS) -->
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="loader-inner">
-    <span class="logo loader-logo"><b>M's</b><small>COFFEE</small></span>
-  </div>
-  <span class="loader-count">0</span>
-  <div class="loader-panel"></div>
-</div>
-<div class="progress" aria-hidden="true"></div>
-<div class="cursor" aria-hidden="true"><div class="cursor-ring"><span></span></div></div>
-<div class="cursor cursor-dot-wrap" aria-hidden="true"><div class="cursor-dot"></div></div>
 
 <header class="nav" id="nav">
   <div class="wrap">
-    <a href="#inicio" class="logo" aria-label="Maru's Coffee, inicio"><b>M's</b><small>COFFEE</small></a>
+    <a href="#inicio" class="logo" aria-label="Maru's Coffee, inicio"><img src="img/logo-marus.svg" alt="" width="47" height="52"></a>
     <ul id="menu">
       <li><a href="#carta">Carta</a></li>
       <li><a href="#destacado">Destacado</a></li>
@@ -587,8 +523,6 @@ html:not(.js) .loader{display:none}
         <text><textPath href="#circ">maru's coffee · café y bollería artesanal · maru's coffee · café y bollería artesanal ·</textPath></text>
       </svg>
       <div class="plate"><img class="disc-photo" src="img/hero.jpg" alt="" onerror="this.remove()"></div>
-      <div class="sticker">Recién horneadas</div>
-      <div class="sticker s2">Mate y café</div>
     </div>
   </div>
 </section>
@@ -649,14 +583,6 @@ html:not(.js) .loader{display:none}
     </div>
     <div class="feature-stage" id="featureStage" aria-hidden="true">
       <div class="disc"><img class="disc-photo" src="img/lotus.jpg" alt="Croissant Lotus de Maru's" onerror="this.remove()"></div>
-      <div class="crumbs">
-        <span style="left:50%;top:50%;--x:-120px;--y:-80px;--d:0s"></span>
-        <span style="left:50%;top:50%;--x:130px;--y:-60px;--d:.05s"></span>
-        <span style="left:50%;top:50%;--x:-90px;--y:110px;--d:.1s"></span>
-        <span style="left:50%;top:50%;--x:150px;--y:90px;--d:.15s"></span>
-        <span style="left:50%;top:50%;--x:10px;--y:-150px;--d:.2s;background:#fff"></span>
-        <span style="left:50%;top:50%;--x:-160px;--y:10px;--d:.25s;background:#fff"></span>
-      </div>
     </div>
   </div>
 </section>
@@ -695,7 +621,7 @@ html:not(.js) .loader{display:none}
       <img class="photo" src="img/local.jpg" alt="Fachada de Maru's Coffee" onerror="this.remove()">
       <div class="sign" aria-hidden="true">
         <svg viewBox="0 0 200 200"><defs><path id="c2" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#c2" startOffset="4%">maru's coffee</textPath></text><text><textPath href="#c2" startOffset="52%">café y bollería artesanal</textPath></text></svg>
-        <span class="logo"><b>M's</b><small>COFFEE</small></span>
+        <span class="logo"><img src="img/logo-marus.svg" alt=""></span>
       </div>
     </div>
     <div class="reveal">
@@ -736,8 +662,7 @@ html:not(.js) .loader{display:none}
 
 <footer>
   <div class="wrap">
-    <div class="dots" id="dots" aria-hidden="true"></div>
-    <span class="logo"><b>M's</b><small>COFFEE</small></span>
+    <span class="logo"><img src="img/logo-marus.svg" alt="Maru's Coffee" width="98" height="110"></span>
     <nav aria-label="Enlaces">
       <a href="https://www.instagram.com/maruscoffee/" target="_blank" rel="noopener">@maruscoffee</a>
       <a href="https://www.panaderiaargentina.cl" target="_blank" rel="noopener">Panadería Argentina</a>
@@ -1022,7 +947,7 @@ function renderDrawer(){
           <button type="button" class="remove" data-remove="${id}">Quitar</button></div>
         <div class="line-right"><strong>${clp(p.price*cart[id])}</strong>${stepper(id)}</div>
       </div>`}).join('')
-      : `<div class="empty"><span class="logo empty-mark" aria-hidden="true"><b>M's</b><small>COFFEE</small></span><h3>Tu carrito está vacío</h3><p>Agrega productos desde la tienda.</p>
+      : `<div class="empty"><span class="logo empty-mark" aria-hidden="true"><img src="img/logo-marus.svg" alt=""></span><h3>Tu carrito está vacío</h3><p>Agrega productos desde la tienda.</p>
          <button class="btn btn-primary" style="margin-top:20px" data-close-cart data-goto="#pedir">Ver productos</button></div>`;
   } else if(view==='checkout'){
     const today=new Date().toLocaleDateString('en-CA',{timeZone:'America/Santiago'});
@@ -1163,12 +1088,12 @@ function render(cat){
   grid.innerHTML = list.map((p,i)=>`
     <article class="card" role="button" aria-haspopup="dialog" tabindex="0" style="--i:${i};--bg:${p.bg}" data-idx="${PRODUCTS.indexOf(p)}" aria-label="${p.name}, ver detalle">
       <div class="card-inner">
-        <div class="card-media">${p.badge?`<span class="badge">${p.badge}</span>`:''}${media(p)}<span class="shine"></span><span class="more" aria-hidden="true">+</span></div>
+        <div class="card-media">${p.badge?`<span class="badge">${p.badge}</span>`:''}${media(p)}<span class="more" aria-hidden="true">+</span></div>
         <div class="card-body"><div><h3>${p.name}</h3><p>${p.desc}</p></div>${p.price?`<span class="price">${p.price}</span>`:''}</div>
       </div>
     </article>`).join('');
   requestAnimationFrame(()=>grid.querySelectorAll('.card').forEach(c=>c.classList.add('show')));
-  bindTilt();
+  bindCards();
 }
 
 /* Tabs con píldora deslizante */
@@ -1194,19 +1119,9 @@ document.querySelector('.tabs').addEventListener('keydown',e=>{
   const t=tabs[(j+tabs.length)%tabs.length]; t.focus(); t.click();
 });
 
-/* Tilt 3D + brillo que sigue al cursor */
-const fine = matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches;
-function bindTilt(){
+/* Tarjetas: abren la ficha con clic, Enter o espacio */
+function bindCards(){
   grid.querySelectorAll('.card').forEach(card=>{
-    const inner=card.querySelector('.card-inner');
-    if(fine){
-      card.addEventListener('pointermove',e=>{
-        const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
-        inner.style.transform=`rotateY(${(x-.5)*12}deg) rotateX(${(.5-y)*12}deg)`;
-        card.style.setProperty('--mx',x*100+'%');card.style.setProperty('--my',y*100+'%');
-      });
-      card.addEventListener('pointerleave',()=>inner.style.transform='');
-    }
     card.addEventListener('click',()=>openModal(+card.dataset.idx));
     card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(+card.dataset.idx)}});
   });
@@ -1322,21 +1237,16 @@ document.getElementById('y').textContent=new Date().getFullYear();
 
 /* Arranque */
 syncCart();
-/* El hero arranca al terminar el preloader (motion.js). Sin motion.js, arranca al cargar. */
-window.startHero=()=>document.body.classList.add('loaded');
-addEventListener('load',()=>{
-  movePill(tabs[0]);
-  if(!window.__preloader){document.getElementById('loader')?.remove();startHero()}
-});
-setTimeout(()=>{startHero();if(!window.__preloader)document.getElementById('loader')?.remove()},4500);
+/* La portada entra al cargar (y como respaldo, a los 2,5 s) */
+const startHero=()=>document.body.classList.add('loaded');
+addEventListener('load',()=>{movePill(tabs[0]);startHero()});
+setTimeout(startHero,2500);
 window.__appReady=true;
 </script>
-<!-- Capa de animación: GSAP + plugins (gratuitos desde GSAP 3.13). Si no cargan, la página funciona igual. -->
+<!-- Capa de animación: GSAP + ScrollTrigger + ScrollTo. Si no cargan, la página funciona igual. -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
 <script src="js/motion.js"></script>
 </body>
 </html>

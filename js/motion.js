@@ -1,15 +1,16 @@
 /* =========================================================
    Maru's Coffee — capa de animación (GSAP + ScrollTrigger).
+   Tres momentos y nada más: la entrada de la portada, la
+   galería horizontal y el plato del Croissant Lotus.
    Todo es progresivo: si GSAP no carga o el usuario pidió
    "reducir movimiento", la página funciona sin estos efectos.
    ========================================================= */
 (function () {
   if (!window.gsap || !window.ScrollTrigger) return;
   const { gsap } = window;
-  gsap.registerPlugin(...[window.ScrollTrigger, window.ScrollToPlugin, window.SplitText, window.ScrambleTextPlugin].filter(Boolean));
+  gsap.registerPlugin(...[window.ScrollTrigger, window.ScrollToPlugin].filter(Boolean));
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const fine = matchMedia('(pointer: fine)').matches;
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
@@ -30,86 +31,29 @@
     addEventListener('touchstart', stop, { passive: true });
   }
 
-  if (reduce) return;
-  document.documentElement.classList.add('motion');
-
-  /* ---------- 1. Preloader: logo, contador y cortina ---------- */
-  const loader = $('#loader');
-  window.__preloader = !!loader;
-  if (loader) {
-    loader.style.animation = 'none';
-    const b = $('.loader-logo b', loader);
-    b.style.animation = 'none';
-    const count = $('.loader-count', loader);
-    let seen = false;
-    try { seen = sessionStorage.getItem('marus-visto') === '1'; sessionStorage.setItem('marus-visto', '1'); } catch (e) {}
-    if (seen) {
-      /* Ya lo vio en esta sesión: sin preloader */
-      loader.remove();
-      heroIn();
-    } else {
-      /* Primera visita: ~1,3 s en total */
-      document.documentElement.style.overflow = 'hidden';
-      const n = { v: 0 };
-      const tl = gsap.timeline({
-        defaults: { ease: 'expo.inOut' },
-        onComplete: () => { loader.remove(); ScrollTrigger.refresh(); }
-      });
-      tl.fromTo(b, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .55 })
-        .from('.loader-logo small', { y: 12, opacity: 0, duration: .3, ease: 'power3.out' }, .3)
-        .from('.loader-tag', { opacity: 0, duration: .3, ease: 'power2.out' }, .15)
-        .to(n, { v: 100, duration: .65, ease: 'power2.inOut', onUpdate: () => count.textContent = Math.round(n.v) }, 0)
-        .to('.loader-panel', { yPercent: -100, duration: .4 }, .6)
-        .add(() => { document.documentElement.style.overflow = ''; heroIn(); }, .85)
-        .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: .5 }, .85);
-      /* Seguro: si la pestaña está en segundo plano o lenta, nunca dejar el preloader pegado */
-      setTimeout(() => { if (loader.isConnected) tl.progress(1); }, 4000);
-    }
-  }
-
-  /* ---------- 2. Hero: entrada, parallax y salida ---------- */
-  function heroIn() {
-    window.startHero && window.startHero();
-  }
-  const heroArt = $('.hero-art');
-  if (heroArt && fine) {
-    const qx = gsap.quickTo(heroArt, '--px', { duration: .9, ease: 'power3' });
-    const qy = gsap.quickTo(heroArt, '--py', { duration: .9, ease: 'power3' });
-    $('.hero').addEventListener('pointermove', e => { qx(e.clientX / innerWidth * 2 - 1); qy(e.clientY / innerHeight * 2 - 1); });
-    $('.hero').addEventListener('pointerleave', () => { qx(0); qy(0); });
-  }
-  gsap.to('.hero-art', { yPercent: 16, scale: .86, rotate: -6, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.hero .wrap > div:first-child', { yPercent: -14, opacity: .15, ease: 'none', scrollTrigger: { trigger: '.hero', start: '30% top', end: 'bottom top', scrub: true } });
-
-  /* ---------- 3. Títulos: letras que suben al entrar ---------- */
-  const splitTitles = () => {
-    if (!window.SplitText) return;
-    $$('.sec-head h2, .shop-head h2, .about h2, .visit h2, .feature h2, .gal-intro h2').forEach(h => {
-      const split = SplitText.create(h, { type: 'words,chars', mask: 'words' });
-      gsap.from(split.chars, {
-        yPercent: 110, rotate: 6, opacity: 0, duration: .9, ease: 'power4.out',
-        stagger: { each: .025 },
-        scrollTrigger: { trigger: h, start: 'top 88%' }
+  /* Nav: marca la sección visible (funcional, también con movimiento reducido).
+     Se crea después de las secciones fijadas para que cuente el espacio que agregan. */
+  const navActive = () => {
+    const links = $$('#menu a');
+    links.forEach(a => {
+      const sec = $(a.getAttribute('href')); if (!sec) return;
+      ScrollTrigger.create({
+        trigger: sec, start: 'top 45%', end: 'bottom 45%',
+        onToggle: self => { if (self.isActive) links.forEach(l => l.setAttribute('aria-current', l === a)); else a.setAttribute('aria-current', 'false'); }
       });
     });
   };
-  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(splitTitles);
 
-  /* Eyebrows: efecto "scramble" al entrar */
-  if (window.ScrambleTextPlugin) {
-    $$('main .eyebrow').filter(el => !el.children.length).forEach(el => {
-      const text = el.textContent;
-      ScrollTrigger.create({
-        trigger: el, start: 'top 90%', once: true,
-        onEnter: () => gsap.to(el, { duration: 1.1, scrambleText: { text, chars: "MARUSCOFE·'", speed: .6 } })
-      });
-    });
-  }
+  if (reduce) { navActive(); return; }
+  document.documentElement.classList.add('motion');
 
-  /* ---------- 5. Animaciones que dependen del ancho ---------- */
+  /* ---------- 1. Portada: el título sube palabra por palabra y el plato se asienta (CSS) ----------
+     Al bajar, la foto se aleja un poco. */
+  gsap.to('.hero-art', { yPercent: 10, scale: .94, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+
   const mm = gsap.matchMedia();
   mm.add('(min-width: 901px)', () => {
-    /* Galería horizontal fijada */
+    /* ---------- 2. Galería horizontal: se fija y avanza de lado mientras bajas ---------- */
     const gTrack = $('.gal-track');
     if (gTrack) {
       const dist = () => Math.max(0, gTrack.scrollWidth - innerWidth);
@@ -117,109 +61,20 @@
         x: () => -dist(), ease: 'none',
         scrollTrigger: { trigger: '.gallery', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 }
       });
-      $$('.gal-item').forEach((item, i) => {
+      $$('.gal-item').forEach(item => {
         gsap.fromTo($('img', item), { xPercent: -15 }, { xPercent: 0, ease: 'none', scrollTrigger: { trigger: item, containerAnimation: move, start: 'left right', end: 'right left', scrub: true } });
-        gsap.from(item, { y: i % 2 ? -90 : 90, rotate: i % 2 ? -7 : 7, opacity: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: item, containerAnimation: move, start: 'left 92%' } });
-        gsap.from($('figcaption', item), { x: 40, opacity: 0, duration: .8, delay: .25, ease: 'power3.out', scrollTrigger: { trigger: item, containerAnimation: move, start: 'left 85%' } });
       });
     }
 
-    /* Destacado: se fija y el plato gira mientras bajas */
-    const tl = gsap.timeline({ scrollTrigger: { trigger: '#destacado', start: 'top top', end: '+=110%', pin: true, scrub: 1, anticipatePin: 1 } });
-    tl.fromTo('.feature-stage .disc', { scale: .5, rotate: -50 }, { scale: 1, rotate: 0, ease: 'power2.out', duration: 1 })
-      .fromTo('.feature-stage .disc-photo', { clipPath: 'circle(0% at 50% 50%)' }, { clipPath: 'circle(50% at 50% 50%)', ease: 'power2.out', duration: 1 }, 0)
-      .from('#destacado .wrap > .reveal > *', { x: -70, opacity: 0, stagger: .15, duration: .6 }, .1)
-      .to('.feature-stage .disc', { rotate: 18, scale: 1.04, ease: 'none', duration: .8 });
-  });
-  mm.add('(max-width: 900px)', () => {
-    gsap.from('.feature-stage .disc', { scale: .6, rotate: -40, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.feature-stage', start: 'top 80%' } });
+    /* ---------- 3. Destacado: se fija y el plato del Lotus se abre ---------- */
+    const tl = gsap.timeline({ scrollTrigger: { trigger: '#destacado', start: 'top top', end: '+=80%', pin: true, scrub: 1, anticipatePin: 1 } });
+    tl.fromTo('.feature-stage .disc', { scale: .7 }, { scale: 1, ease: 'power2.out', duration: 1 })
+      .fromTo('.feature-stage .disc-photo', { clipPath: 'circle(0% at 50% 50%)' }, { clipPath: 'circle(50% at 50% 50%)', ease: 'power2.out', duration: 1 }, 0);
   });
 
-  /* ---------- 6. Nosotros, visítanos y detalles ---------- */
-  gsap.fromTo('.about-visual', { clipPath: 'inset(22% 22% 22% 22% round 200px)' }, {
-    clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 1.5, ease: 'expo.out', clearProps: 'clipPath',
-    scrollTrigger: { trigger: '.about-visual', start: 'top 82%' }
-  });
-  gsap.to('.sign', { rotate: 28, ease: 'none', scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true } });
-  gsap.from('.perk', {
-    y: 30, opacity: 0, duration: .7, ease: 'power3.out', stagger: .1, clearProps: 'transform,opacity',
-    scrollTrigger: { trigger: '.perks', start: 'top 92%' }
-  });
-  gsap.from('.visit', { scale: .9, borderRadius: 90, ease: 'none', scrollTrigger: { trigger: '.visit', start: 'top bottom', end: 'top 35%', scrub: true } });
-  gsap.from('#hours li', { x: 50, opacity: 0, stagger: .1, duration: .7, ease: 'power3.out', scrollTrigger: { trigger: '#hours', start: 'top 88%' } });
-  gsap.from('.shop-steps .step span', { scale: .4, opacity: 0, stagger: .12, duration: .6, ease: 'power3.out', scrollTrigger: { trigger: '.shop-steps', start: 'top 92%' } });
+  navActive();
 
-  /* Barra de progreso */
-  gsap.to('.progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: .3 } });
-
-  /* Nav: marca la sección visible */
-  const links = $$('#menu a');
-  links.forEach(a => {
-    const sec = $(a.getAttribute('href')); if (!sec) return;
-    ScrollTrigger.create({
-      trigger: sec, start: 'top 45%', end: 'bottom 45%',
-      onToggle: self => { if (self.isActive) links.forEach(l => l.setAttribute('aria-current', l === a)); else a.setAttribute('aria-current', 'false'); }
-    });
-  });
-
-  /* ---------- 7. Grilla de puntos estilo anime.js (footer) ---------- */
-  const dotsEl = $('#dots');
-  if (dotsEl) {
-    let dots = [], cols = 0, rows = 6;
-    const build = () => {
-      const c = innerWidth < 901 ? 14 : 26;
-      if (c === cols) return;
-      cols = c;
-      dotsEl.innerHTML = '<i></i>'.repeat(cols * rows);
-      dots = $$('i', dotsEl);
-    };
-    build();
-    addEventListener('resize', build);
-    const ripple = from => {
-      gsap.timeline()
-        .to(dots, { scale: 2.2, y: -12, backgroundColor: '#9a5b3a', opacity: 1, duration: .35, ease: 'power2.out', stagger: { grid: [rows, cols], from, amount: .8 } })
-        .to(dots, { scale: 1, y: 0, backgroundColor: '#1d4f55', opacity: .75, duration: .9, ease: 'elastic.out(1, .35)', stagger: { grid: [rows, cols], from, amount: .8 } }, .3);
-    };
-    dotsEl.addEventListener('pointerdown', e => { const i = dots.indexOf(e.target); if (i > -1) ripple(i); });
-    if (fine) dotsEl.addEventListener('pointerover', e => {
-      if (e.target.tagName !== 'I') return;
-      gsap.fromTo(e.target, { scale: 1 }, { scale: 2.6, duration: .25, yoyo: true, repeat: 1, ease: 'power2.out', overwrite: 'auto' });
-    });
-    ScrollTrigger.create({ trigger: dotsEl, start: 'top 85%', once: true, onEnter: () => ripple('center') });
-  }
-
-  /* ---------- 8. Cursor propio + botones magnéticos (solo mouse) ---------- */
-  if (fine) {
-    document.body.classList.add('has-cursor', 'has-magnet');
-    const ring = $('.cursor-ring'), label = $('span', ring);
-    const [cRing, cDot] = $$('.cursor');
-    const rx = gsap.quickTo(cRing, 'x', { duration: .45, ease: 'power3' }), ry = gsap.quickTo(cRing, 'y', { duration: .45, ease: 'power3' });
-    const dx = gsap.quickTo(cDot, 'x', { duration: .1, ease: 'power3' }), dy = gsap.quickTo(cDot, 'y', { duration: .1, ease: 'power3' });
-    addEventListener('pointermove', e => { rx(e.clientX); ry(e.clientY); dx(e.clientX); dy(e.clientY); ring.classList.remove('out'); }, { passive: true });
-    document.addEventListener('pointerleave', () => ring.classList.add('out'));
-    document.addEventListener('pointerover', e => {
-      const t = e.target;
-      const card = t.closest('.card');
-      const act = t.closest('a,button,label,.chip,[role="tab"]');
-      ring.classList.toggle('label', !!card);
-      ring.classList.toggle('link', !card && !!act);
-      ring.classList.toggle('dark', !!t.closest('.feature,.visit,.drawer-bg,.modal-bg'));
-      label.textContent = card ? 'Ver' : '';
-    });
-
-    const MAG = '.btn,.buy,.chip,.cart-btn';
-    let cur = null;
-    const release = el => gsap.to(el, { x: 0, y: 0, duration: .5, ease: 'power3.out' });
-    document.addEventListener('pointermove', e => {
-      const el = e.target.closest(MAG);
-      if (el !== cur) { cur && release(cur); cur = el; }
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      gsap.to(el, { x: (e.clientX - r.left - r.width / 2) * .3, y: (e.clientY - r.top - r.height / 2) * .4, duration: .4, ease: 'power3.out' });
-    }, { passive: true });
-  }
-
-  /* ---------- 9. Recalcular posiciones cuando cambia el alto de la página ---------- */
+  /* Recalcular posiciones cuando cambia el alto de la página */
   let rT;
   new ResizeObserver(() => { clearTimeout(rT); rT = setTimeout(() => ScrollTrigger.refresh(), 200); }).observe($('main'));
 })();
