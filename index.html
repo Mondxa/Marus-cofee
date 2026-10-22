@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maru's Coffee · Café y bollería argentina en Santiago</title>
+<link rel="icon" href="img/logo-marus.svg" type="image/svg+xml">
+<meta name="theme-color" content="#1d4f55">
 <meta name="color-scheme" content="light">
 <script>
 /* Las animaciones de entrada solo ocultan contenido si el JavaScript corre.
@@ -272,7 +274,9 @@ section{padding:120px 0}
 .hours li{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px dashed rgba(255,255,255,.2)}
 .hours li:last-child{border:0}
 .hours li.today{color:var(--butter-light);font-weight:700}
-.address{margin:22px 0 30px;font-size:1.1rem;opacity:.9}
+.address{margin:22px 0 10px;font-size:1.1rem;opacity:.9}
+.rating{margin:0 0 30px;font-size:.95rem}
+.rating .stars{color:var(--butter);letter-spacing:2px}
 .visit .ctas{display:flex;gap:12px;flex-wrap:wrap}
 .visit .btn-ghost{border-color:var(--cream);color:var(--cream)}
 .visit .btn-ghost:hover{background:var(--cream);color:var(--teal)}
@@ -482,8 +486,8 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
   .mobile-cta .btn-ghost,.mobile-cta .btn-ghost:hover{background:var(--white);color:var(--teal)}
 }
 @media (max-width:520px){
-  .tabs{width:100%}
-  .tab{flex:1;padding:0 10px;font-size:.9rem}
+  .tabs{width:100%;gap:2px}
+  .tab{flex:1 1 auto;padding:0 8px;font-size:.85rem}
   .perks{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
@@ -549,12 +553,13 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>Nuestra carta</h2>
-      <p>Toca un producto para ver el detalle.</p>
+      <p>Toca un producto para ver el detalle. Precios en el local, sujetos a cambios.</p>
     </div>
 
     <div class="tabs reveal" role="tablist" aria-label="Categorías">
       <span class="tab-pill" id="pill" aria-hidden="true"></span>
       <button class="tab" role="tab" id="tab-dulce" aria-controls="grid" aria-selected="true" tabindex="0" data-cat="dulce">Bollería</button>
+      <button class="tab" role="tab" id="tab-desayuno" aria-controls="grid" aria-selected="false" tabindex="-1" data-cat="desayuno">Desayunos</button>
       <button class="tab" role="tab" id="tab-salado" aria-controls="grid" aria-selected="false" tabindex="-1" data-cat="salado">Salado</button>
       <button class="tab" role="tab" id="tab-bebidas" aria-controls="grid" aria-selected="false" tabindex="-1" data-cat="bebidas">Bebidas</button>
     </div>
@@ -572,13 +577,13 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
         <p>Recorre lo que sale cada día de nuestra vitrina.</p>
         <span class="gal-arrow" aria-hidden="true">→</span>
       </div>
-      <figure class="gal-item" style="--h:64vh;--ar:3/4;--mt:-6vh"><div class="gal-frame"><img src="img/croissant-pistacho.jpg" alt="Croissant bicolor de pistacho" loading="lazy"></div><figcaption>Croissant pistacho</figcaption></figure>
-      <figure class="gal-item" style="--h:46vh;--ar:1/1;--mt:14vh"><div class="gal-frame"><img src="img/croissant-colores.jpg" alt="Croissants fucsia y verde" loading="lazy"></div><figcaption>Los de colores</figcaption></figure>
-      <figure class="gal-item" style="--h:58vh;--ar:4/5;--mt:-10vh"><div class="gal-frame"><img src="img/levain.jpg" alt="Galletas levain" loading="lazy"></div><figcaption>Levain cookies</figcaption></figure>
-      <figure class="gal-item" style="--h:44vh;--ar:1/1;--mt:12vh"><div class="gal-frame"><img src="img/latte.jpg" alt="Latte con arte latte" loading="lazy"></div><figcaption>Latte de la casa</figcaption></figure>
-      <figure class="gal-item" style="--h:60vh;--ar:4/5;--mt:-4vh"><div class="gal-frame"><img src="img/tostadas.jpg" alt="Tostadas de masa madre con salmón" loading="lazy"></div><figcaption>Tostadas de masa madre</figcaption></figure>
-      <figure class="gal-item" style="--h:48vh;--ar:1/1;--mt:10vh"><div class="gal-frame"><img src="img/croissant-serrano.jpg" alt="Croissant con jamón serrano y burrata" loading="lazy"></div><figcaption>Serrano & burrata</figcaption></figure>
-      <figure class="gal-item" style="--h:56vh;--ar:3/4;--mt:-8vh"><div class="gal-frame"><img src="img/cafe-frio.jpg" alt="Café helado con leche en vaso de vidrio" loading="lazy"></div><figcaption>Café frío</figcaption></figure>
+      <figure class="gal-item" style="--h:64vh;--ar:3/4;--mt:-6vh"><div class="gal-frame"><img src="img/vitrina.jpg" alt="Bandejas de croissants bicolor de pistacho y de frutos rojos en la vitrina" loading="lazy"></div><figcaption>Recién salidos</figcaption></figure>
+      <figure class="gal-item" style="--h:46vh;--ar:1/1;--mt:14vh"><div class="gal-frame"><img src="img/croissant-pistacho.jpg" alt="Croissant bicolor de pistacho" loading="lazy"></div><figcaption>Croissant pistacho</figcaption></figure>
+      <figure class="gal-item" style="--h:58vh;--ar:4/5;--mt:-10vh"><div class="gal-frame"><img src="img/croissant-chocotorta.jpg" alt="Croissant coronado con crema de chocotorta" loading="lazy"></div><figcaption>Croissant chocotorta</figcaption></figure>
+      <figure class="gal-item" style="--h:44vh;--ar:1/1;--mt:12vh"><div class="gal-frame"><img src="img/empanadas.jpg" alt="Tres empanadas criollas al horno" loading="lazy"></div><figcaption>Empanadas criollas</figcaption></figure>
+      <figure class="gal-item" style="--h:60vh;--ar:4/5;--mt:-4vh"><div class="gal-frame"><img src="img/smash-benedictino.jpg" alt="Croissant aplastado con jamón serrano, huevo pochado y salsa holandesa" loading="lazy"></div><figcaption>Smash benedictino</figcaption></figure>
+      <figure class="gal-item" style="--h:48vh;--ar:1/1;--mt:10vh"><div class="gal-frame"><img src="img/croissant-frutos-rojos.jpg" alt="Croissant con crema y arándanos" loading="lazy"></div><figcaption>Frutos rojos</figcaption></figure>
+      <figure class="gal-item" style="--h:56vh;--ar:3/4;--mt:-8vh"><div class="gal-frame"><img src="img/cafe-frio.jpg" alt="Espresso cayendo sobre leche fría con hielo" loading="lazy"></div><figcaption>Latte frío</figcaption></figure>
       <div class="gal-end">
         <p>¿Se te antojó?</p>
         <a href="#pedir" class="btn btn-primary">Pide online <span aria-hidden="true">→</span></a>
@@ -659,8 +664,9 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
     <div class="reveal">
       <h2>Visítanos</h2>
       <p class="address">Av. Las Condes 8586, Las Condes, Santiago</p>
+      <p class="rating"><span class="stars" aria-hidden="true">★★★★★</span> <strong>4,8 en Google</strong> · más de 450 reseñas</p>
       <div class="ctas">
-        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Av.+Las+Condes+8586+Santiago" target="_blank" rel="noopener">Abrir en Maps</a>
+        <a class="btn btn-primary" href="https://maps.google.com/?cid=13478045549910246326" target="_blank" rel="noopener">Abrir en Maps</a>
         <a class="btn btn-ghost" href="https://www.instagram.com/maruscoffee/" target="_blank" rel="noopener">Instagram</a>
       </div>
     </div>
@@ -736,26 +742,38 @@ const PRODUCTS = [
   {cat:'dulce', sku:'ml-ddl', name:'Medialuna Dulce de Leche', price:'$2.800', desc:'Hojaldre 100% mantequilla relleno con dulce de leche argentino.', tags:['Rellena','Dulce de leche'], art:'ddl', bg:'#f1ddc8', foto:'medialuna-ddl.jpg', badge:'Favorita'},
   {cat:'dulce', sku:'ml-past', name:'Medialuna Pastelera', price:'$2.800', desc:'Hojaldre 100% mantequilla relleno con crema pastelera 100% casera.', tags:['Rellena','Pastelera casera'], art:'pastelera', bg:'#f7ecd5', foto:'medialuna-pastelera.jpg'},
   {cat:'dulce', sku:'ml-nut', name:'Medialuna Nutella', price:'$3.200', desc:'Hojaldre 100% mantequilla relleno con Nutella.', tags:['Rellena','Nutella'], art:'ddl', bg:'#eadbcc', foto:'medialuna-nutella.jpg'},
-  {cat:'dulce', name:'Croissant Pistacho', price:'', desc:'Croissant bicolor con crema y crocante de pistacho.', tags:['Bicolor','Pistacho'], art:'pistacho', bg:'#e2ecd9', foto:'croissant-pistacho.jpg'},
-  {cat:'dulce', name:'Croissant Frutos Rojos', price:'', desc:'Croissant de mantequilla con crema y arándanos frescos.', tags:['Frutal'], art:'berry', bg:'#f4dde3', foto:'croissant-frutos-rojos.jpg'},
+  {cat:'dulce', name:'Croissant Tradicional', price:'$4.000', desc:'Masa de hojaldre salada, solo con mantequilla. Para acompañar el café.', tags:['Clásico','Mantequilla'], art:'classic', bg:'#f6e6cf', foto:'croissant-tradicional.jpg'},
+  {cat:'dulce', name:'Croissant Pistacho', price:'$6.200', desc:'Croissant bicolor relleno con crema pastelera casera y praliné de pistacho.', tags:['Bicolor','Pistacho'], art:'pistacho', bg:'#e2ecd9', foto:'croissant-pistacho.jpg'},
+  {cat:'dulce', name:'Croissant Frutos Rojos', price:'$6.000', desc:'Relleno con crema de queso y mermelada de frutos del bosque, con arándanos encima.', tags:['Frutal'], art:'berry', bg:'#f4dde3', foto:'croissant-frutos-rojos.jpg'},
+  {cat:'dulce', name:'Croissant Chocotorta', price:'$6.200', desc:'Relleno con nuestra crema de chocotorta argentina.', tags:['Chocolate','Argentino'], art:'ddl', bg:'#eadbcc', foto:'croissant-chocotorta.jpg'},
   {cat:'dulce', name:'Croissant Mazapán Nuez', price:'', desc:'Relleno de mazapán, cubierto de nueces y glaseado.', tags:['Nuez','Mazapán'], art:'classic', bg:'#f1e3d0', foto:'croissant-mazapan.jpg'},
-  {cat:'dulce', name:'Danesa de Manzana', price:'', desc:'Hojaldre con manzana especiada y crema.', tags:['Manzana'], art:'pastelera', bg:'#f5e6cf', foto:'danesa-manzana.jpg'},
-  {cat:'dulce', name:'Levain Cookies', price:'', desc:'Galletas gruesas estilo Nueva York, crujientes por fuera y blandas por dentro.', tags:['Cookies','Para compartir'], art:'classic', bg:'#efe2d3', foto:'levain.jpg'},
+  {cat:'dulce', name:'Danesa de Manzana', price:'$5.000', desc:'Hojaldre con manzana especiada y crema.', tags:['Manzana'], art:'pastelera', bg:'#f5e6cf', foto:'danesa-manzana.jpg'},
+  {cat:'dulce', name:'Churrines', price:'$2.400', desc:'Masa de medialuna con una leve lluvia de azúcar granulada. Van de a dos.', tags:['Para el mate'], art:'classic', bg:'#f7ecd5', foto:'churrines.jpg'},
+  {cat:'dulce', name:'Levain Cookies', price:'$4.500', desc:'Galletas gruesas estilo Nueva York, crujientes por fuera y blandas por dentro.', tags:['Cookies','Para compartir'], art:'classic', bg:'#efe2d3', foto:'levain.jpg'},
+  {cat:'dulce', name:'Carrot Cake', price:'$5.000', desc:'Torta de zanahoria con frosting de queso crema.', tags:['Torta'], art:'classic', bg:'#f3ead8', foto:'carrot-cake.jpg'},
   {cat:'dulce', name:'Croissants de Colores', price:'', desc:'Croissants de hojaldre en fucsia y verde.', tags:['Edición especial'], art:'pink', bg:'#ecdcef', foto:'croissant-colores.jpg', badge:'Instagrameable'},
-  {cat:'salado', name:'Croissant Salmón', price:'', desc:'Croissant mantequilloso con salmón, tomate y hojas verdes.', tags:['Salmón'], art:'salmon', bg:'#f6e1d6', foto:'croissant-salmon.jpg'},
-  {cat:'salado', name:'Tostadas Maru\'s', price:'', desc:'Pan de masa madre tostado con salmón, queso crema y brotes.', tags:['Masa madre','Brunch'], art:'toast', bg:'#efe6d6', foto:'tostadas.jpg', badge:'Brunch'},
-  {cat:'salado', name:'Ensalada Salmón', price:'', desc:'Mix de hojas, salmón, tomate cherry y queso.', tags:['Liviano','Salmón'], art:'salmon', bg:'#e2ecd9', foto:'ensalada-salmon.jpg'},
-  {cat:'salado', name:'Croissant Serrano', price:'', desc:'Croissant crujiente con jamón serrano, burrata y brotes.', tags:['Serrano','Burrata'], art:'serrano', bg:'#f3dcd5', foto:'croissant-serrano.jpg'},
-  {cat:'salado', name:'Invertido Pastrami', price:'', desc:'Hojaldre invertido relleno de pastrami.', tags:['Pastrami'], art:'classic', bg:'#f1e3d0', foto:'invertido-pastrami.jpg'},
+  {cat:'desayuno', name:'Desayuno Santiago', price:'$15.500', desc:'2 huevos revueltos, tostadas de masa madre, jamón artesanal, queso laminado y ½ palta. Incluye café y jugo de naranja natural.', tags:['Incluye café','Jugo natural'], art:'toast', bg:'#efe6d6', foto:'desayuno-santiago.jpg', badge:'Completo'},
+  {cat:'desayuno', name:'Desayuno Primavera', price:'$12.000', desc:'Bowl de yogur natural con frutas de estación, granola, frutos secos, miel y mermelada. Incluye café y jugo de naranja natural.', tags:['Liviano','Incluye café'], art:'berry', bg:'#e2ecd9', foto:'desayuno-primavera.jpg'},
+  {cat:'desayuno', name:'Smash Benedictino', price:'$15.000', desc:'Croissant aplastado con palta, jamón serrano, huevo pochado y salsa holandesa.', tags:['Brunch','Huevo pochado'], art:'serrano', bg:'#f3dcd5', foto:'smash-benedictino.jpg', badge:'Brunch'},
+  {cat:'desayuno', name:'Tostón Burrata', price:'$12.000', desc:'Tostada de masa madre con palta, hojas verdes, tomate cherry y ½ burrata.', tags:['Masa madre','Burrata'], art:'toast', bg:'#e2ecd9', foto:'toston-burrata.jpg'},
+  {cat:'desayuno', name:'Tostadas Maru\'s', price:'$12.000', desc:'Dos tostadas de masa madre con queso crema y salmón ahumado.', tags:['Masa madre','Salmón'], art:'toast', bg:'#efe6d6', foto:'tostadas.jpg'},
+  {cat:'salado', name:'Empanadas Criollas', price:'$10.000', desc:'Tres empanadas de carne al horno. También de queso, espinaca y salsa blanca.', tags:['Argentinas','x3'], art:'classic', bg:'#f4e3d3', foto:'empanadas.jpg', badge:'Argentinas'},
   {cat:'salado', sku:'pz-moz', name:'Pizza Mozzarella', price:'$16.000', desc:'Individual de 23 cm con 180 g de mozzarella argentina, orégano y aceitunas.', tags:['Pizza','23 cm'], art:'pizza', bg:'#f4e3d3', foto:'pizza-mozzarella.jpg'},
   {cat:'salado', sku:'pz-fug', name:'Pizza Fugazza', price:'$16.000', desc:'Individual de 23 cm con mozzarella argentina, cebolla, orégano y aceitunas.', tags:['Pizza','23 cm'], art:'pizza', bg:'#f1e6d2', foto:'pizza-fugazza.jpg'},
   {cat:'salado', sku:'pz-jym', name:'Pizza Jamón y Morrón', price:'$17.000', desc:'Individual de 23 cm con mozzarella, jamón artesanal y morrón.', tags:['Pizza','23 cm'], art:'pizza', bg:'#f3dcd5', foto:'pizza-jamon-morron.jpg'},
-  {cat:'bebidas', name:'Latte', price:'', desc:'Espresso con leche texturizada y latte art.', tags:['Caliente'], art:'latte', bg:'#efe2d3', foto:'latte.jpg'},
-  {cat:'bebidas', name:'Cappuccino', price:'', desc:'Espresso, leche espumada y cacao espolvoreado.', tags:['Caliente'], art:'latte', bg:'#f3ead8', foto:'cappuccino.jpg'},
-  {cat:'bebidas', name:'Café Frío', price:'', desc:'Café helado sobre leche fría, con hielo.', tags:['Frío'], art:'iced', bg:'#e1ebec', foto:'cafe-frio.jpg', badge:'Verano'},
-  {cat:'bebidas', name:'Mate en Lata', price:'', desc:'Mate argentino en lata, en varios sabores. Listo para llevar.', tags:['Argentino','Para llevar'], art:'mate', bg:'#dde7d6', foto:'mate.jpg'}
+  {cat:'salado', name:'Sándwich de la Casa', price:'$15.000', desc:'Ciabatta artesanal con palta, jamón cocido, queso, hojas verdes, pepinillo, mostaza Dijon y tomate. Con papitas rústicas.', tags:['Ciabatta','Papitas'], art:'toast', bg:'#efe6d6', foto:'sandwich-casa.jpg'},
+  {cat:'salado', name:'Smash Burrata', price:'$15.000', desc:'Croissant aplastado con palta, jamón serrano y burrata.', tags:['Serrano','Burrata'], art:'serrano', bg:'#f3dcd5', foto:'croissant-serrano.jpg'},
+  {cat:'salado', name:'Croissant Salmón', price:'$15.000', desc:'Croissant abierto con salmón ahumado, queso crema, rúcula y tomate.', tags:['Salmón'], art:'salmon', bg:'#f6e1d6', foto:'croissant-salmon.jpg'},
+  {cat:'salado', name:'Ensalada Salmón', price:'$16.000', desc:'Hojas verdes, salmón ahumado, frutos secos, tomate cherry y queso crema. Con tostadas de masa madre.', tags:['Liviano','Salmón'], art:'salmon', bg:'#e2ecd9', foto:'ensalada-salmon.jpg'},
+  {cat:'salado', name:'Invertido Pastrami', price:'', desc:'Hojaldre invertido relleno de pastrami.', tags:['Pastrami'], art:'classic', bg:'#f1e3d0', foto:'invertido-pastrami.jpg'},
+  {cat:'bebidas', name:'Latte', price:'$3.900', desc:'Espresso con leche texturizada y latte art.', tags:['Caliente'], art:'latte', bg:'#efe2d3', foto:'latte.jpg'},
+  {cat:'bebidas', name:'Cappuccino', price:'$3.400', desc:'Espresso, leche espumada y cacao espolvoreado.', tags:['Caliente'], art:'latte', bg:'#f3ead8', foto:'cappuccino.jpg'},
+  {cat:'bebidas', name:'Cappuccino Pistacho', price:'$4.700', desc:'Cappuccino con crema de pistacho y el borde de la taza cubierto de pistacho.', tags:['Caliente','Pistacho'], art:'pistacho', bg:'#e2ecd9', foto:'cappuccino-pistacho.jpg', badge:'De la casa'},
+  {cat:'bebidas', name:'Latte Frío', price:'$4.000', desc:'Espresso sobre leche fría y hielo.', tags:['Frío'], art:'iced', bg:'#e1ebec', foto:'cafe-frio.jpg', badge:'Verano'},
+  {cat:'bebidas', name:'Servicio de Mate', price:'$5.000', desc:'Mate argentino servido en la mesa, para tomarlo sin apuro.', tags:['Argentino','Para compartir'], art:'mate', bg:'#dde7d6', foto:'servicio-mate.jpg'},
+  {cat:'bebidas', name:'Mate en Lata', price:'$3.500', desc:'Yerba mate fría en lata, en varios sabores. Lista para llevar.', tags:['Frío','Para llevar'], art:'mate', bg:'#dde7d6', foto:'mate.jpg'}
 ];
-const CAT_LABEL = {dulce:'Bollería', salado:'Salado', bebidas:'Bebidas'};
+const CAT_LABEL = {dulce:'Bollería', desayuno:'Desayunos', salado:'Salado', bebidas:'Bebidas'};
 
 /* Mientras falte la foto de un producto: ficha tipográfica con el nombre (la foto la tapa al cargar) */
 function ph(p){
