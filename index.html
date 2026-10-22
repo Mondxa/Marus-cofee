@@ -578,7 +578,7 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
       <figure class="gal-item" style="--h:44vh;--ar:1/1;--mt:12vh"><div class="gal-frame"><img src="img/latte.jpg" alt="Latte con arte latte" loading="lazy"></div><figcaption>Latte de la casa</figcaption></figure>
       <figure class="gal-item" style="--h:60vh;--ar:4/5;--mt:-4vh"><div class="gal-frame"><img src="img/tostadas.jpg" alt="Tostadas de masa madre con salmón" loading="lazy"></div><figcaption>Tostadas de masa madre</figcaption></figure>
       <figure class="gal-item" style="--h:48vh;--ar:1/1;--mt:10vh"><div class="gal-frame"><img src="img/croissant-serrano.jpg" alt="Croissant con jamón serrano y burrata" loading="lazy"></div><figcaption>Serrano & burrata</figcaption></figure>
-      <figure class="gal-item" style="--h:56vh;--ar:3/4;--mt:-8vh"><div class="gal-frame"><img src="img/cafe-frio.jpg" alt="Café frío con espuma" loading="lazy"></div><figcaption>Café frío</figcaption></figure>
+      <figure class="gal-item" style="--h:56vh;--ar:3/4;--mt:-8vh"><div class="gal-frame"><img src="img/cafe-frio.jpg" alt="Café helado con leche en vaso de vidrio" loading="lazy"></div><figcaption>Café frío</figcaption></figure>
       <div class="gal-end">
         <p>¿Se te antojó?</p>
         <a href="#pedir" class="btn btn-primary">Pide online <span aria-hidden="true">→</span></a>
@@ -634,8 +634,7 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
 <section class="about" id="nosotros">
   <div class="wrap">
     <div class="about-visual reveal">
-      <!-- Foto opcional: guarda img/local.jpg y aparecerá aquí -->
-      <img class="photo" src="img/local.jpg" alt="Fachada de Maru's Coffee" onerror="this.remove()">
+      <img class="photo" src="img/local.jpg" alt="Terraza de Maru's Coffee en Av. Las Condes" onerror="this.remove()">
       <div class="sign" aria-hidden="true">
         <svg viewBox="0 0 200 200"><defs><path id="c2" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#c2" startOffset="4%">maru's coffee</textPath></text><text><textPath href="#c2" startOffset="52%">café y bollería artesanal</textPath></text></svg>
         <span class="logo"><img src="img/logo-marus.svg" alt=""></span>
@@ -753,7 +752,7 @@ const PRODUCTS = [
   {cat:'salado', sku:'pz-jym', name:'Pizza Jamón y Morrón', price:'$17.000', desc:'Individual de 23 cm con mozzarella, jamón artesanal y morrón.', tags:['Pizza','23 cm'], art:'pizza', bg:'#f3dcd5', foto:'pizza-jamon-morron.jpg'},
   {cat:'bebidas', name:'Latte', price:'', desc:'Espresso con leche texturizada y latte art.', tags:['Caliente'], art:'latte', bg:'#efe2d3', foto:'latte.jpg'},
   {cat:'bebidas', name:'Cappuccino', price:'', desc:'Espresso, leche espumada y cacao espolvoreado.', tags:['Caliente'], art:'latte', bg:'#f3ead8', foto:'cappuccino.jpg'},
-  {cat:'bebidas', name:'Café Frío', price:'', desc:'Café helado con espuma cremosa.', tags:['Frío'], art:'iced', bg:'#e1ebec', foto:'cafe-frio.jpg', badge:'Verano'},
+  {cat:'bebidas', name:'Café Frío', price:'', desc:'Café helado sobre leche fría, con hielo.', tags:['Frío'], art:'iced', bg:'#e1ebec', foto:'cafe-frio.jpg', badge:'Verano'},
   {cat:'bebidas', name:'Mate en Lata', price:'', desc:'Mate argentino en lata, en varios sabores. Listo para llevar.', tags:['Argentino','Para llevar'], art:'mate', bg:'#dde7d6', foto:'mate.jpg'}
 ];
 const CAT_LABEL = {dulce:'Bollería', salado:'Salado', bebidas:'Bebidas'};
@@ -791,7 +790,6 @@ const SHOP = [
   {id:'ml-trad', g:'bolleria', name:'Medialuna Tradicional', price:2400, desc:'Hojaldre 100% mantequilla. 105 g.', art:'classic', bg:'#f6e6cf', foto:'medialuna-tradicional.jpg'},
   {id:'ml-ddl', g:'bolleria', name:'Medialuna Dulce de Leche', price:2800, desc:'Hojaldre 100% mantequilla, rellena con dulce de leche.', art:'ddl', bg:'#f1ddc8', foto:'medialuna-ddl.jpg'},
   {id:'ml-past', g:'bolleria', name:'Medialuna Pastelera', price:2800, desc:'Hojaldre 100% mantequilla, rellena con pastelera casera.', art:'pastelera', bg:'#f7ecd5', foto:'medialuna-pastelera.jpg'},
-  {cat:'dulce', sku:'ml-nut', name:'Medialuna Nutella', price:'$3.200', desc:'Hojaldre 100% mantequilla relleno con Nutella.', tags:['Rellena','Nutella'], art:'ddl', bg:'#eadbcc', foto:'medialuna-nutella.jpg'},
   {id:'ml-nut', g:'bolleria', name:'Medialuna Nutella', price:3200, desc:'Hojaldre 100% mantequilla, rellena con Nutella.', art:'ddl', bg:'#eadbcc', foto:'medialuna-nutella.jpg'},
   {id:'pz-moz', g:'salado', name:'Pizza Mozzarella', price:16000, desc:'Individual 23 cm, 180 g de mozzarella argentina, orégano y aceitunas.', art:'pizza', bg:'#f4e3d3', foto:'pizza-mozzarella.jpg'},
   {id:'pz-fug', g:'salado', name:'Pizza Fugazza', price:16000, desc:'Individual 23 cm, mozzarella argentina, cebolla, orégano y aceitunas.', art:'pizza', bg:'#f1e6d2', foto:'pizza-fugazza.jpg'},
