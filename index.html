@@ -12,6 +12,8 @@
    Si el script principal no llega a terminar, se muestra todo igual. */
 document.documentElement.classList.add('js');
 setTimeout(function(){ if(!window.__appReady) document.documentElement.classList.remove('js'); }, 4000);
+/* La pantalla de carga se muestra una sola vez por sesión */
+try{ if(sessionStorage.getItem('marus-visto')==='1') document.documentElement.classList.add('visto'); }catch(e){}
 </script>
 <meta name="description" content="Maru's Coffee: cafetería y bollería artesanal argentina en Santiago de Chile. Medialunas 100% mantequilla, croissants, tostadas y café de especialidad. Pet friendly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -416,6 +418,17 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 
 .wait .card,.wait .shop-item{animation-play-state:paused!important}
 
+/* Pantalla de carga: el logo se dibuja, cuenta hasta 100 y sube una cortina.
+   La anima motion.js; si GSAP no llega, se va sola por CSS a los 3 s. */
+.loader{position:fixed;inset:0;z-index:400;background:var(--cream);display:grid;place-items:center;overflow:hidden;animation:loaderOut .5s 3s forwards}
+@keyframes loaderOut{to{opacity:0;visibility:hidden}}
+.loader .logo img{height:clamp(150px,36vw,260px);clip-path:inset(0 100% 0 0);animation:loaderLogo .7s .1s var(--ease) forwards}
+@keyframes loaderLogo{to{clip-path:inset(0 0 0 0)}}
+.loader-count{position:absolute;right:clamp(16px,4vw,48px);bottom:clamp(12px,3vw,32px);font-family:var(--serif);font-size:clamp(3rem,9vw,7rem);line-height:1;color:var(--teal);font-variant-numeric:tabular-nums;opacity:0}
+.loader-count::after{content:"%";font-size:.4em;vertical-align:top;margin-left:4px;color:var(--brown)}
+.loader-panel{position:absolute;inset:0;background:var(--teal);transform:translateY(100%)}
+html.visto .loader,html:not(.js) .loader{display:none}
+
 /* Sin JavaScript (o si falló): todo visible, sin estados iniciales ocultos */
 html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!important;transform:none!important;animation:none!important}
 @media (min-width:901px){.motion .feature{min-height:100vh;display:flex;align-items:center}}
@@ -493,10 +506,18 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .card{opacity:1;transform:none}
+  .loader{display:none!important}
 }
 </style>
 </head>
 <body>
+
+<!-- Pantalla de carga: solo en la primera visita de la sesión -->
+<div class="loader" id="loader" aria-hidden="true">
+  <span class="logo"><img src="img/logo-marus.svg" alt="" width="233" height="260"></span>
+  <span class="loader-count">0</span>
+  <div class="loader-panel"></div>
+</div>
 
 
 <header class="nav" id="nav">
@@ -1270,10 +1291,11 @@ document.getElementById('y').textContent=new Date().getFullYear();
 
 /* Arranque */
 syncCart();
-/* La portada entra al cargar (y como respaldo, a los 2,5 s) */
+/* La portada entra cuando se levanta la pantalla de carga (motion.js); sin ella, al cargar. Respaldo a los 3 s. */
 const startHero=()=>document.body.classList.add('loaded');
-addEventListener('load',()=>{movePill(tabs[0]);startHero()});
-setTimeout(startHero,2500);
+window.startHero=startHero;
+addEventListener('load',()=>{movePill(tabs[0]);if(!window.__preloader)startHero()});
+setTimeout(startHero,3000);
 window.__appReady=true;
 </script>
 <!-- Capa de animación: GSAP + ScrollTrigger + ScrollTo. Si no cargan, la página funciona igual. -->

@@ -1,7 +1,7 @@
 /* =========================================================
    Maru's Coffee — capa de animación (GSAP + ScrollTrigger).
-   Tres momentos y nada más: la entrada de la portada, la
-   galería horizontal y el plato del Croissant Lotus.
+   Cuatro momentos y nada más: la pantalla de carga, la entrada
+   de la portada, la galería horizontal y el plato del Croissant Lotus.
    Todo es progresivo: si GSAP no carga o el usuario pidió
    "reducir movimiento", la página funciona sin estos efectos.
    ========================================================= */
@@ -46,6 +46,38 @@
 
   if (reduce) { navActive(); return; }
   document.documentElement.classList.add('motion');
+
+  /* ---------- 0. Pantalla de carga: contador y cortina (una vez por sesión) ---------- */
+  const loader = $('#loader');
+  const seen = document.documentElement.classList.contains('visto');
+  try { sessionStorage.setItem('marus-visto', '1'); } catch (e) {}
+  /* Si GSAP llegó tarde, el CSS ya la ocultó: no se vuelve a mostrar */
+  if (loader && (seen || performance.now() > 2500)) loader.remove();
+  else if (loader) {
+    window.__preloader = true;
+    const root = document.documentElement, count = $('.loader-count', loader), heroImg = $('.plate img');
+    let done = false;
+    const lift = () => { root.style.overflow = ''; window.startHero && window.startHero(); };
+    const finish = () => { if (done) return; done = true; lift(); loader.remove(); ScrollTrigger.refresh(); };
+    loader.style.animation = 'none';
+    root.style.overflow = 'hidden';
+    const outro = () => gsap.timeline({ defaults: { ease: 'expo.inOut' }, onComplete: finish })
+      .fromTo('.loader-panel', { yPercent: 100, y: 0 }, { yPercent: 0, duration: .4 })
+      .add(lift, .3)
+      .fromTo(loader, { clipPath: 'inset(0 0 0% 0)' }, { clipPath: 'inset(0 0 100% 0)', duration: .5 }, .3);
+    /* La cortina espera a que la foto de la portada esté lista (1,2 s más como máximo) */
+    const whenReady = () => {
+      if (!heroImg || heroImg.complete) return outro();
+      let went = false;
+      const go = () => { if (!went) { went = true; outro(); } };
+      heroImg.addEventListener('load', go); heroImg.addEventListener('error', go); setTimeout(go, 1200);
+    };
+    const n = { v: 0 };
+    gsap.set(count, { opacity: 1 });
+    gsap.to(n, { v: 100, duration: .9, ease: 'power2.inOut', onUpdate: () => count.textContent = Math.round(n.v), onComplete: whenReady });
+    /* Seguro: con la pestaña en segundo plano o lenta, nunca dejarla pegada */
+    setTimeout(finish, 4500);
+  }
 
   /* ---------- 1. Portada: el título sube palabra por palabra y el plato se asienta (CSS) ----------
      Al bajar, la foto se aleja un poco. */
