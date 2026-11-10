@@ -16,6 +16,24 @@ setTimeout(function(){ if(!window.__appReady) document.documentElement.classList
 try{ if(sessionStorage.getItem('marus-visto')==='1') document.documentElement.classList.add('visto'); }catch(e){}
 </script>
 <meta name="description" content="Maru's Coffee: cafetería y bollería artesanal argentina en Santiago de Chile. Medialunas 100% mantequilla, croissants, tostadas y café de especialidad. Pet friendly.">
+<!-- Vista previa al compartir el enlace (WhatsApp, Instagram, etc.). Cambiar el dominio al pasar al definitivo. -->
+<link rel="canonical" href="https://marus-coffee.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<meta property="og:site_name" content="Maru's Coffee">
+<meta property="og:title" content="Maru's Coffee · Café y bollería argentina en Santiago">
+<meta property="og:description" content="Medialunas 100% mantequilla, croissants y café de especialidad en Av. Las Condes 8586. Pide online o ven a la terraza.">
+<meta property="og:url" content="https://marus-coffee.vercel.app/">
+<meta property="og:image" content="https://marus-coffee.vercel.app/img/vitrina.jpg">
+<meta property="og:image:alt" content="Bandejas de croissants en la vitrina de Maru's Coffee">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Datos del local para buscadores -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CafeOrCoffeeShop","name":"Maru's Coffee","url":"https://marus-coffee.vercel.app/","image":"https://marus-coffee.vercel.app/img/vitrina.jpg","servesCuisine":["Argentina","Bollería","Café"],"priceRange":"$$","hasMap":"https://maps.google.com/?cid=13478045549910246326","sameAs":["https://www.instagram.com/maruscoffee/"],
+"address":{"@type":"PostalAddress","streetAddress":"Av. Las Condes 8586","addressLocality":"Las Condes","addressRegion":"Región Metropolitana","postalCode":"7560119","addressCountry":"CL"},
+"geo":{"@type":"GeoCoordinates","latitude":-33.3955637,"longitude":-70.5491647},
+"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"20:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"09:00","closes":"14:00"}]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
@@ -93,6 +111,8 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
 .hero-meta{list-style:none;display:flex;gap:10px 24px;margin-top:36px;flex-wrap:wrap}
 .hero-meta li{font-size:.92rem;font-weight:500;color:var(--teal-deep);display:flex;align-items:center;gap:8px}
+.hero-meta a{padding:10px 0;margin:-10px 0;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--butter)}
+.hero-meta .stars{color:var(--brown)}
 .lead .flag{margin-right:4px;vertical-align:-1px}
 
 /* split text reveal */
@@ -277,6 +297,17 @@ section{padding:120px 0}
 .hours li:last-child{border:0}
 .hours li.today{color:var(--butter-light);font-weight:700}
 .address{margin:22px 0 10px;font-size:1.1rem;opacity:.9}
+/* Preguntas frecuentes */
+.faq .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
+.faq h2{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1.05;color:var(--teal-deep)}
+.faq h2+p{color:var(--muted);margin-top:14px}
+.faq details{border-bottom:1px solid var(--teal-soft)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:64px;padding:12px 0;font-weight:700;color:var(--teal-deep)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:1.5rem;font-weight:400;color:var(--brown);transition:transform .3s var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{color:var(--muted);padding:0 0 22px;max-width:60ch}
+@media (max-width:900px){.faq .wrap{grid-template-columns:1fr;gap:24px}}
 .rating{margin:0 0 30px;font-size:.95rem}
 .rating .stars{color:var(--butter);letter-spacing:2px}
 .visit .ctas{display:flex;gap:12px;flex-wrap:wrap}
@@ -549,10 +580,11 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
       <h1 class="split" data-split>Medialunas que <em>te abrazan</em> el día</h1>
       <p class="lead reveal"><span class="flag" aria-hidden="true"></span> Bollería argentina en Santiago. Medialunas de hojaldre 100% mantequilla y café de especialidad.</p>
       <div class="ctas reveal">
-        <a href="#carta" class="btn btn-primary">Ver la carta <span aria-hidden="true">→</span></a>
-        <a href="#visitanos" class="btn btn-ghost">Horarios</a>
+        <a href="#pedir" class="btn btn-primary">Pide ahora <span aria-hidden="true">→</span></a>
+        <a href="#carta" class="btn btn-ghost">Ver la carta</a>
       </div>
       <ul class="hero-meta reveal">
+        <li><a href="https://maps.google.com/?cid=13478045549910246326" target="_blank" rel="noopener"><span class="stars" aria-hidden="true">★</span> 4,8 en Google · más de 450 reseñas</a></li>
         <li>Lun a sáb 9–20 · dom 9–14</li>
         <li>Las Condes</li>
         <li>Pet friendly</li>
@@ -669,12 +701,30 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
     <div class="reveal">
       <h2>Un pedacito de Buenos Aires en Santiago</h2>
       <p>Maru's nace de las manos de <strong>Maru Ferres</strong> y de la tradición de <strong>Panadería Argentina</strong>, que hornea desde 2020. Un café argentino en Santiago, con la medialuna de siempre.</p>
-      <p>Cada pieza se lamina a mano con mantequilla.</p>
+      <p>Cada pieza se lamina a mano con mantequilla. En las reseñas de Google, lo que más se repite es el pistacho, las medialunas y el mate.</p>
       <div class="perks">
         <div class="perk"><strong>Artesanal</strong><span>Horneado diario</span></div>
         <div class="perk"><strong>Pet friendly</strong><span>Tu perro es bienvenido</span></div>
         <div class="perk"><strong>Sabor porteño</strong><span>Dulce de leche y mate</span></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PREGUNTAS FRECUENTES ===== -->
+<section class="faq" id="preguntas" aria-labelledby="faqTitle">
+  <div class="wrap">
+    <div class="reveal">
+      <h2 id="faqTitle">Antes de venir</h2>
+      <p>Lo que más nos preguntan.</p>
+    </div>
+    <div class="faq-list reveal">
+      <details><summary>¿Dónde están y en qué horario atienden?</summary><p>En Av. Las Condes 8586, Las Condes. De lunes a sábado de 9:00 a 20:00 y los domingos de 9:00 a 14:00.</p></details>
+      <details><summary>¿Puedo ir con mi perro?</summary><p>Sí. Somos pet friendly y tenemos terraza.</p></details>
+      <details><summary>¿Qué incluyen los desayunos?</summary><p>El Santiago y el Primavera vienen con un café clásico y un vaso de jugo de naranja natural.</p></details>
+      <details><summary>¿Hacen despacho?</summary><p id="faqDespacho">Puedes retirar en el local o pedir despacho a comunas cercanas.</p></details>
+      <details><summary>¿Cómo se paga un pedido online?</summary><p>Por transferencia bancaria o al momento de retirar o recibir el pedido.</p></details>
+      <details><summary>¿Tienen leche vegetal o café descafeinado?</summary><p>Sí, los dos, con un adicional sobre el precio del café.</p></details>
     </div>
   </div>
 </section>
@@ -710,6 +760,7 @@ html:not(.js) :is(.reveal,.card,.shop-item,.split .w>span,.plate){opacity:1!impo
       <a href="https://www.instagram.com/maruscoffee/" target="_blank" rel="noopener">@maruscoffee</a>
       <a href="https://www.panaderiaargentina.cl" target="_blank" rel="noopener">Panadería Argentina</a>
       <a href="#carta">Carta</a>
+      <a href="#preguntas">Preguntas</a>
     </nav>
     <p>© <span id="y"></span> Maru's Coffee · Café y bollería artesanal · Santiago de Chile</p>
   </div>
@@ -1288,6 +1339,9 @@ document.addEventListener('click',e=>{
   document.querySelector(`#hours li[data-d="${row}"]`).classList.add('today');
 })();
 document.getElementById('y').textContent=new Date().getFullYear();
+
+/* La respuesta sobre despacho sale de CONFIG, para que no se contradiga con el carrito */
+document.getElementById('faqDespacho').textContent=`Puedes retirar en el local o pedir despacho a ${CONFIG.despacho.comunas.slice(0,-1).join(', ')} y ${CONFIG.despacho.comunas.slice(-1)}. El despacho cuesta ${clp(CONFIG.despacho.costo)} y el pedido mínimo es de ${clp(CONFIG.despacho.minimo)}.`;
 
 /* Arranque */
 syncCart();
